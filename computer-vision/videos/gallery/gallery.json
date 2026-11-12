@@ -1,0 +1,159 @@
+{
+  "generated_at": "2026-11-12T03:08:54+00:00",
+  "video_count": 8,
+  "processed_video_format": "H.264 MP4",
+  "videos": [
+    {
+      "name": "y4Evv5By6sg_1_00",
+      "accident_type": "t-bone",
+      "duration_seconds": 9.876533,
+      "accident_time_seconds": 4.5045,
+      "resolution": {
+        "width": 1280,
+        "height": 720
+      },
+      "max_confidence": 0.83917,
+      "detected_frames_percentage": 29.96,
+      "detected_frames": 74,
+      "total_frames": 247,
+      "original_video": "releases/conf070_20261111_232511/originals/y4Evv5By6sg_1_00.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/y4Evv5By6sg_1_00.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Boa detecção do acidente."
+    },
+    {
+      "name": "y4Evv5By6sg_4_00",
+      "accident_type": "head-on",
+      "duration_seconds": 6.773433,
+      "accident_time_seconds": 2.969633,
+      "resolution": {
+        "width": 1280,
+        "height": 720
+      },
+      "max_confidence": 0.776461,
+      "detected_frames_percentage": 10.65,
+      "detected_frames": 18,
+      "total_frames": 169,
+      "original_video": "releases/conf070_20261111_232511/originals/y4Evv5By6sg_4_00.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/y4Evv5By6sg_4_00.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Boa detecção do acidente."
+    },
+    {
+      "name": "TXZfPbiopOE_00",
+      "accident_type": "sideswipe",
+      "duration_seconds": 13.046367,
+      "accident_time_seconds": 5.271933,
+      "resolution": {
+        "width": 1280,
+        "height": 720
+      },
+      "max_confidence": 0.833107,
+      "detected_frames_percentage": 57.32,
+      "detected_frames": 184,
+      "total_frames": 321,
+      "original_video": "releases/conf070_20261111_232511/originals/TXZfPbiopOE_00.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/TXZfPbiopOE_00.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Boa detecção do acidente."
+    },
+    {
+      "name": "OehnhIPFm4Q_04",
+      "accident_type": "t-bone",
+      "duration_seconds": 8.12,
+      "accident_time_seconds": 5.92,
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "max_confidence": 0.853684,
+      "detected_frames_percentage": 18.14,
+      "detected_frames": 37,
+      "total_frames": 204,
+      "original_video": "releases/conf070_20261111_232511/originals/OehnhIPFm4Q_04.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/OehnhIPFm4Q_04.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Detecta a derrapagem e depois a colisão."
+    },
+    {
+      "name": "N6zJ2inqJn0_0_00",
+      "accident_type": "t-bone",
+      "duration_seconds": 11.978633,
+      "accident_time_seconds": 6.740067,
+      "resolution": {
+        "width": 1280,
+        "height": 720
+      },
+      "max_confidence": 0.844038,
+      "detected_frames_percentage": 41.0,
+      "detected_frames": 123,
+      "total_frames": 300,
+      "original_video": "releases/conf070_20261111_232511/originals/N6zJ2inqJn0_0_00.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/N6zJ2inqJn0_0_00.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Falso positivo antes (0.78), mas detecta a colisão (0.80)."
+    },
+    {
+      "name": "L334aqEJxys_0_00",
+      "accident_type": "t-bone",
+      "duration_seconds": 13.880533,
+      "accident_time_seconds": 4.771433,
+      "resolution": {
+        "width": 1280,
+        "height": 720
+      },
+      "max_confidence": 0.879866,
+      "detected_frames_percentage": 26.44,
+      "detected_frames": 92,
+      "total_frames": 348,
+      "original_video": "releases/conf070_20261111_232511/originals/L334aqEJxys_0_00.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/L334aqEJxys_0_00.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Boa detecção do acidente."
+    },
+    {
+      "name": "e17Wq4Hpqlk_02",
+      "accident_type": "head-on",
+      "duration_seconds": 5.92,
+      "accident_time_seconds": 0.72,
+      "resolution": {
+        "width": 1920,
+        "height": 1080
+      },
+      "max_confidence": 0.831571,
+      "detected_frames_percentage": 19.46,
+      "detected_frames": 29,
+      "total_frames": 149,
+      "original_video": "releases/conf070_20261111_232511/originals/e17Wq4Hpqlk_02.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/e17Wq4Hpqlk_02.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Resultado reprocessado com confiança mínima de 0,70; revisar visualmente."
+    },
+    {
+      "name": "N6zJ2inqJn0_3_00",
+      "accident_type": "t-bone",
+      "duration_seconds": 7.3073,
+      "accident_time_seconds": 2.969633,
+      "resolution": {
+        "width": 1280,
+        "height": 720
+      },
+      "max_confidence": 0.801567,
+      "detected_frames_percentage": 53.26,
+      "detected_frames": 98,
+      "total_frames": 184,
+      "original_video": "releases/conf070_20261111_232511/originals/N6zJ2inqJn0_3_00.mp4",
+      "processed_video": "releases/conf070_20261111_232511/processed/N6zJ2inqJn0_3_00.mp4",
+      "processed_video_mime_type": "video/mp4",
+      "browser_compatible": true,
+      "observation": "Resultado reprocessado com confiança mínima de 0,70; revisar visualmente."
+    }
+  ]
+}

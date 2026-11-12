@@ -1,0 +1,10 @@
+# PyTorch and Torchvision are installed separately with the CUDA wheel index;
+# see README.md. These pins match the inspected Python 3.11 environment.
+ultralytics==8.4.208
+opencv-python==5.0.0.93
+numpy==2.4.6
+Pillow==13.0.0
+tqdm==4.70.1
+imageio-ffmpeg==0.8.1
+matplotlib==3.11.2
+pandas==3.1.1
