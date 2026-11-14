@@ -11,6 +11,9 @@
 *.key
 id_rsa
 id_ed25519
+credentials
+/.aws/credentials
+**/.aws/credentials
 credentials.json
 secrets.json
 
@@ -96,3 +99,14 @@ Thumbs.db
 !/computer-vision/runs/detect/runs/alertavida_yolo11n/weights/
 /computer-vision/runs/detect/runs/alertavida_yolo11n/weights/*
 !/computer-vision/runs/detect/runs/alertavida_yolo11n/weights/best.pt
+
+# Terraform state, local variables, plans, and working directories.
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+tfplan
+*.tfplan
+crash.log
+crash.*.log

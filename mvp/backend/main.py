@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
 from .databricks import clear_alertas_cache, fetch_alertas
+from .gallery import router as gallery_router
 from .schemas import Alerta, Estatisticas, Indicadores
 
 
@@ -23,6 +24,7 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+app.include_router(gallery_router)
 
 
 def load_alertas() -> list[dict]:
@@ -30,6 +32,11 @@ def load_alertas() -> list[dict]:
         return fetch_alertas()
     except Exception as exc:
         raise HTTPException(status_code=503, detail="Não foi possível consultar a fonte Databricks.") from exc
+
+
+@app.get("/api/live")
+def live() -> dict:
+    return {"status": "alive"}
 
 
 @app.get("/api/health")

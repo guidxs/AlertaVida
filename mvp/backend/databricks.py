@@ -1,6 +1,8 @@
 from datetime import date, datetime
 from functools import lru_cache
 import math
+import re
+import unicodedata
 from typing import Any
 
 from databricks import sql
@@ -8,11 +10,27 @@ from databricks import sql
 from .config import get_settings
 
 QUERY = """
-SELECT evento_id, tipo_ocorrencia, data_evento, confianca,
-       latitude, longitude, status, simulado
+SELECT *
 FROM workspace.alertavida.gold_mvp_alertas
 ORDER BY data_evento DESC
 """
+
+PUBLIC_COLUMNS = {
+    "evento_id", "tipo_ocorrencia", "data_evento", "confianca",
+    "latitude", "longitude", "status", "simulado",
+}
+CAMERA_COLUMNS = {
+    "camera", "cameraid", "idcamera", "identificacaocamera",
+    "identificadorcamera", "cameraidentificacao", "cameranome",
+    "nomecamera", "sourcecamera", "origemcamera", "codigocamera",
+}
+
+
+def _is_public_column(name: str) -> bool:
+    normalized = unicodedata.normalize("NFD", name.lower())
+    normalized = "".join(char for char in normalized if not unicodedata.combining(char))
+    normalized = re.sub(r"[^a-z0-9]", "", normalized)
+    return name in PUBLIC_COLUMNS or normalized in CAMERA_COLUMNS
 
 
 def _json_value(value: Any) -> Any:
@@ -37,7 +55,11 @@ def fetch_alertas() -> list[dict[str, Any]]:
             cursor.execute(QUERY)
             columns = [column[0].lower() for column in cursor.description]
             return [
-                {key: _json_value(value) for key, value in zip(columns, row)}
+                {
+                    key: _json_value(value)
+                    for key, value in zip(columns, row)
+                    if _is_public_column(key)
+                }
                 for row in cursor.fetchall()
             ]
 

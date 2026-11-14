@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL || ''
 
 async function request(path, options) {
   const response = await fetch(`${API_URL}${path}`, options)
@@ -14,5 +14,6 @@ export const api = {
   indicadores: () => request('/api/indicadores'),
   estatisticas: () => request('/api/alertas/estatisticas'),
   health: () => request('/api/health'),
-  refresh: () => request('/api/refresh', { method: 'POST' }),
+  gallery: () => request('/api/gallery'),
+  galleryVideoUrl: path => `${API_URL}/api/gallery/videos?${new URLSearchParams({ path })}`,
 }

@@ -1,0 +1,53 @@
+services:
+  backend:
+    image: alertavida-backend
+    build:
+      context: .
+      dockerfile: mvp/backend/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./mvp/.env
+    expose:
+      - "8000"
+    volumes:
+      - type: bind
+        source: ./computer-vision/videos/gallery
+        target: /app/computer-vision/videos/gallery
+        read_only: true
+        bind:
+          create_host_path: false
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/live', timeout=3)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    image: alertavida-frontend
+    build:
+      context: ./mvp/frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8082}:8080"
+    read_only: true
+    user: "101:101"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m,uid=101,gid=101,mode=1770

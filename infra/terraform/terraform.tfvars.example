@@ -1,0 +1,5 @@
+aws_region = "us-east-1"
+vpc_id     = "vpc-0360add362b66e243"
+subnet_id  = "subnet-03bf50883991d2037"
+key_name   = "alertavida-deploy"
+ssh_cidr   = "191.183.38.26/32"

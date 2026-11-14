@@ -1,10 +1,11 @@
-import { Activity, BarChart3, Database, MapPin, ShieldAlert, Table2 } from 'lucide-react'
+import { Activity, BarChart3, Database, Film, MapPin, ShieldAlert, Table2 } from 'lucide-react'
 
 const links = [
   [Activity, 'Painel geral', 'overview'],
   [MapPin, 'Mapa de ocorrências', 'map'],
   [Table2, 'Registro de alertas', 'incidents'],
   [BarChart3, 'Estatísticas', 'metrics'],
+  [Film, 'Galeria de Detecções', 'gallery'],
 ]
 
 export default function Sidebar({ connection, selected, onSelect, alertCount = 0 }) {
