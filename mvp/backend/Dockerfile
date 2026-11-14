@@ -1,5 +1,9 @@
 FROM python:3.11-slim
 
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
@@ -13,6 +17,7 @@ RUN groupadd --system app \
 
 COPY mvp/backend/requirements.txt ./backend/requirements.txt
 RUN python -m pip install --no-cache-dir -r backend/requirements.txt
+RUN python -m pip install --no-cache-dir --upgrade pip setuptools wheel jaraco.context
 
 COPY --chown=app:app \
     mvp/backend/__init__.py \
