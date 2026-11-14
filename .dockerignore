@@ -1,0 +1,29 @@
+# Deny the full repository by default; this context serves the backend build.
+**
+
+# Re-allow only the parent directories and files used by backend/Dockerfile COPY.
+!mvp/
+!mvp/backend/
+!mvp/backend/requirements.txt
+!mvp/backend/__init__.py
+!mvp/backend/config.py
+!mvp/backend/databricks.py
+!mvp/backend/gallery.py
+!mvp/backend/main.py
+!mvp/backend/schemas.py
+
+# Explicitly keep secrets, credentials, private keys, and Terraform artifacts out.
+**/.env
+**/.env.*
+**/credentials
+**/credentials.*
+**/.aws/credentials
+**/*.pem
+**/*.key
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfvars
+**/*.tfvars.json
+**/tfplan
+**/*.tfplan
+**/.terraform/**
