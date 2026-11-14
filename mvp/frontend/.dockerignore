@@ -1,0 +1,33 @@
+# Locally installed dependencies and generated build output.
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+
+# Git metadata.
+.git/
+**/.git/
+
+# Local environment files; retain only the documented example template.
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Package manager logs.
+npm-debug.log*
+**/npm-debug.log*
+yarn-debug.log*
+**/yarn-debug.log*
+yarn-error.log*
+**/yarn-error.log*
+pnpm-debug.log*
+**/pnpm-debug.log*
+
+# Test coverage and Vite cache.
+coverage/
+**/coverage/
+.vite/
+**/.vite/

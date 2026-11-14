@@ -1,0 +1,23 @@
+[Unit]
+Description=Deploy the latest security-approved AlertaVida main commit
+Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=ec2-user
+Group=ec2-user
+SupplementaryGroups=docker
+WorkingDirectory=/home/ec2-user/AlertaVida
+StateDirectory=alertavida-deploy
+StateDirectoryMode=0750
+UMask=0077
+Environment=HOME=/home/ec2-user
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+ExecStart=/usr/bin/bash /home/ec2-user/AlertaVida/ops/deploy/deploy-alertavida.sh
+TimeoutStartSec=30min
+NoNewPrivileges=true
+PrivateTmp=true
+StandardOutput=journal
+StandardError=journal
