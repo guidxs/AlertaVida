@@ -350,7 +350,7 @@ if not isinstance(head_repository, dict) or head_repository.get("full_name") != 
     reject()
 if run.get("name") != "Deploy Blindado":
     reject()
-if not str(run.get("path", "")).startswith(".github/workflows/deploy-blindado.yml@"):
+if run.get("path") != ".github/workflows/deploy-blindado.yml":
     reject()
 if run.get("head_branch") != "main" or run.get("event") != "push":
     reject()
