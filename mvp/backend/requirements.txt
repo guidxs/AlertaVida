@@ -1,6 +1,6 @@
-fastapi>=0.115,<1
+fastapi>=0.133,<1
 uvicorn[standard]>=0.30,<1
 databricks-sql-connector>=4.0,<5
 pydantic-settings>=2.6,<3
 python-dotenv>=1.0,<2
-prometheus-fastapi-instrumentator>=7.1,<8
+prometheus-fastapi-instrumentator>=8,<9
