@@ -1,0 +1,42 @@
+﻿groups:
+  - name: alertavida-alerts
+    rules:
+      - alert: AlertaVidaBackendDown
+        expr: up{job="alertavida-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Backend do AlertaVida indisponível"
+          description: "O Prometheus não consegue coletar métricas do backend há mais de 1 minuto."
+
+      - alert: AlertaVidaHighErrorRate
+        expr: |
+          (
+            sum(rate(http_requests_total{job="alertavida-backend",status="5xx"}[5m]))
+            /
+            clamp_min(sum(rate(http_requests_total{job="alertavida-backend"}[5m])), 0.001)
+          ) > 0.05
+          and
+          sum(rate(http_requests_total{job="alertavida-backend"}[5m])) > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Taxa elevada de erros HTTP 5xx"
+          description: "Mais de 5% das requisições ao backend estão retornando erros 5xx."
+
+      - alert: AlertaVidaHighLatency
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le) (
+              rate(http_request_duration_seconds_bucket{job="alertavida-backend"}[5m])
+            )
+          ) > 1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Latência elevada no backend"
+          description: "A latência p95 do backend ultrapassou 1 segundo."

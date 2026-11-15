@@ -21,6 +21,14 @@ services:
       - no-new-privileges:true
     cap_drop:
       - ALL
+    networks:
+      - default
+      - observability
+    logging: &bounded_logs
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
     healthcheck:
       test:
         - CMD
@@ -51,3 +59,117 @@ services:
       - ALL
     tmpfs:
       - /tmp:rw,noexec,nosuid,nodev,size=16m,uid=101,gid=101,mode=1770
+    logging: *bounded_logs
+
+  prometheus:
+    image: prom/prometheus:v3.15.1
+    profiles:
+      - observability
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+      - --storage.tsdb.retention.size=512MB
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - type: bind
+        source: ./ops/observability/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./ops/observability/alerts.yml
+        target: /etc/prometheus/alerts.yml
+        read_only: true
+        bind:
+          create_host_path: false
+      - alertavida_prometheus_data:/prometheus
+    networks:
+      - observability
+    read_only: true
+    user: "65534:65534"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=32m,uid=65534,gid=65534,mode=1770
+    mem_limit: 384m
+    cpus: 0.25
+    pids_limit: 128
+    logging: *bounded_logs
+    healthcheck:
+      test: ["CMD", "/bin/busybox", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9090/-/ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  node-exporter:
+    image: prom/node-exporter:v1.12.1
+    profiles:
+      - observability
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/host/root
+      - --collector.disable-defaults
+      - --collector.cpu
+      - --collector.diskstats
+      - --collector.filesystem
+      - --collector.loadavg
+      - --collector.meminfo
+      - --collector.stat
+      - --collector.uname
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /proc
+        target: /host/proc
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: /sys
+        target: /host/sys
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: /
+        target: /host/root
+        read_only: true
+        bind:
+          propagation: rslave
+          create_host_path: false
+    networks:
+      - observability
+    read_only: true
+    user: "65534:65534"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 64m
+    cpus: 0.10
+    pids_limit: 64
+    logging: *bounded_logs
+    healthcheck:
+      test: ["CMD", "/bin/busybox", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9100/metrics"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  alertavida_prometheus_data:
+    name: alertavida_prometheus_data
+
+networks:
+  default: {}
+  observability:
+    name: alertavida_observability
+    internal: true

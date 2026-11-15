@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from .config import get_settings
 from .databricks import clear_alertas_cache, fetch_alertas
@@ -25,6 +26,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(gallery_router)
+Instrumentator(
+    should_instrument_requests_inprogress=True,
+    should_ignore_untemplated=False,
+    excluded_handlers=[r"^/metrics$"],
+).instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
 
 
 def load_alertas() -> list[dict]:

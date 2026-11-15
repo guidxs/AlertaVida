@@ -94,12 +94,31 @@ active_container_image_id() {
 }
 
 check_build_space() {
+    local docker_root_dir
+    local filesystem
+    local df_output
     local available_kib
 
-    available_kib="$(df -Pk -- "$APP_DIR" | awk 'END {print $4}')" || die "Could not check free space for the project filesystem."
-    [[ "$available_kib" =~ ^[0-9]+$ ]] || die "Could not parse free space for the project filesystem."
-    ((available_kib >= 1536 * 1024)) || die "Less than 1.5 GiB is available on the project filesystem; refusing to build."
-    log INFO "Project filesystem has at least 1.5 GiB available for the build."
+    docker_root_dir="$(docker info --format '{{.DockerRootDir}}' 2>/dev/null)" \
+        || die "Could not determine DockerRootDir."
+
+    [[ -n "$docker_root_dir" && -d "$docker_root_dir" ]] \
+        || die "DockerRootDir is missing or inaccessible."
+
+    for filesystem in "$APP_DIR" "$docker_root_dir"; do
+        df_output="$(df -Pk -- "$filesystem" 2>/dev/null)" \
+            || die "Could not check free space for: $filesystem."
+
+        available_kib="$(awk 'END {print $4}' <<< "$df_output")"
+
+        [[ "$available_kib" =~ ^[0-9]+$ ]] \
+            || die "Could not parse free space for: $filesystem."
+
+        ((available_kib >= 1536 * 1024)) \
+            || die "Less than 1.5 GiB available on filesystem: $filesystem. Refusing to build."
+
+        log INFO "Filesystem $filesystem has at least 1.5 GiB available."
+    done
 }
 
 http_check() {
@@ -122,6 +141,45 @@ http_check() {
 
 verify_services() {
     service_health_check && http_check / && http_check /api/live
+}
+
+observability_health_check() {
+    local service
+    local container_id
+    local health
+    local attempt
+
+    for service in prometheus node-exporter; do
+        health=""
+        for ((attempt = 1; attempt <= 12; attempt++)); do
+            container_id="$(WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" \
+                --profile observability ps -q "$service" 2>/dev/null || true)"
+            if [[ "$container_id" =~ ^[[:xdigit:]]{64}$ ]]; then
+                health="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}missing{{end}}' \
+                    "$container_id" 2>/dev/null || true)"
+                case "$health" in
+                    healthy) break ;;
+                    unhealthy|missing) return 1 ;;
+                esac
+            fi
+            sleep 5
+        done
+        [[ "$health" == "healthy" ]] || return 1
+    done
+}
+
+reconcile_observability() {
+    if WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" --profile observability \
+        up -d --no-build prometheus node-exporter; then
+        if observability_health_check; then
+            log INFO "Prometheus and Node Exporter are healthy."
+        else
+            log WARN "Prometheus or Node Exporter failed its health check; the MVP remains active and unchanged."
+        fi
+    else
+        log WARN "Prometheus or Node Exporter could not be reconciled; the healthy MVP remains active and unchanged."
+    fi
+    return 0
 }
 
 capture_image() {
@@ -190,7 +248,7 @@ rollback() {
     fi
 
     if ((checkout_ok && images_restored)); then
-        if WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" up -d --no-build; then
+        if WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" up -d --no-build backend frontend; then
             log INFO "Rollback Compose up command completed."
         else
             log ERROR "Rollback Compose up command failed."
@@ -407,7 +465,8 @@ else
 fi
 
 if ((DEPLOYED_STATE_EXISTS)) && [[ "$ROLLBACK_SHA" == "$APPROVED_SHA" ]]; then
-    log INFO "Approved SHA is already deployed; nothing to do."
+    log INFO "Approved SHA is already deployed; reconciling optional observability services."
+    reconcile_observability
     exit 0
 fi
 
@@ -432,7 +491,7 @@ git -C "$APP_DIR" fetch --no-tags origin +refs/heads/main:refs/remotes/origin/ma
 remote_main_sha="$(git -C "$APP_DIR" rev-parse 'refs/remotes/origin/main^{commit}')" || die "Could not resolve the final origin/main SHA."
 [[ "$remote_main_sha" == "$APPROVED_SHA" ]] || die "origin/main changed before activation; refusing to activate this SHA."
 
-WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" up -d --no-build || die "Compose update failed."
+WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" up -d --no-build backend frontend || die "MVP Compose update failed."
 verify_services || die "Post-deploy health checks failed."
 
 deployed_backend_image_id="$(active_container_image_id backend)" || die "Could not identify the healthy backend image for deployment state."
@@ -447,4 +506,5 @@ chmod 600 "$state_temporary_file" || die "Could not secure temporary deployment 
 mv -f -- "$state_temporary_file" "$DEPLOYED_STATE_FILE" || die "Could not save deployed state."
 TRANSACTION_ACTIVE=0
 
-log INFO "Deployment completed successfully at ${APPROVED_SHA:0:12}."
+log INFO "MVP deployment completed successfully at ${APPROVED_SHA:0:12}."
+reconcile_observability
