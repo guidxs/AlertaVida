@@ -88,6 +88,7 @@ services:
           create_host_path: false
       - alertavida_prometheus_data:/prometheus
     networks:
+      - default
       - observability
     read_only: true
     user: "65534:65534"
