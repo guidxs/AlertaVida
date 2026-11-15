@@ -87,7 +87,7 @@
       "datasource": {"type": "prometheus", "uid": "prometheus"},
       "targets": [
         {
-          "expr": "100 * sum(rate(http_requests_total{job=\"alertavida-backend\",status=\"5xx\"}[5m])) / clamp_min(sum(rate(http_requests_total{job=\"alertavida-backend\"}[5m])), 0.001)",
+          "expr": "100 * (sum(rate(http_requests_total{job=\"alertavida-backend\",status=~\"5xx\"}[5m])) or vector(0)) / clamp_min(sum(rate(http_requests_total{job=\"alertavida-backend\"}[5m])), 0.001)",
           "legendFormat": "Error rate",
           "refId": "A"
         }

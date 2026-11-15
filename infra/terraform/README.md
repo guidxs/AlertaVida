@@ -24,6 +24,8 @@ Para verificar se as credenciais estão funcionando:
 aws sts get-caller-identity
 ```
 
+O AWS Academy Learner Lab fornece credenciais temporárias. Quando uma sessão expirar, inicie o laboratório novamente e atualize as credenciais da AWS CLI com os novos valores disponibilizados em `AWS Details`. A expiração da sessão não exige repetir o provisionamento da infraestrutura.
+
 ## 2. Preparar os arquivos locais
 
 Por segurança, o arquivo de estado do Terraform (`terraform.tfstate`), as variáveis reais (`terraform.tfvars`) e o plano de execução serão armazenados fora do repositório.
@@ -51,7 +53,9 @@ notepad $tfvars
 
 O arquivo de exemplo contém as variáveis necessárias para configurar a região, a VPC, a subnet, o par de chaves e o endereço IP autorizado a acessar a instância por SSH.
 
-**Importante:** se o endereço IP público utilizado para SSH mudar, atualize a variável `ssh_cidr` antes de executar o planejamento.
+**Importante:** se o endereço IP público do operador mudar, atualize a variável `ssh_cidr` no arquivo `terraform.tfvars`, mantendo o formato IPv4 `/32`. Em seguida, gere e revise um novo plano antes de aplicar qualquer alteração. Isso atualiza a regra de SSH do Security Group.
+
+O endereço IP público da EC2 também pode mudar após a reinicialização de uma sessão do Learner Lab. Nesse caso, consulte os outputs ou o console AWS para obter o endereço atual. A mudança do IP público não significa, por si só, que seja necessário recriar a infraestrutura.
 
 ## 3. Inicializar o Terraform
 
@@ -79,6 +83,8 @@ Antes de aplicar as alterações, revise o plano salvo:
 terraform show $tfplan
 ```
 
+**AMI da instância:** a configuração utiliza um ID de AMI fixo para evitar substituições inesperadas da instância durante novos planejamentos. Atualizações de imagem devem ser feitas intencionalmente, após verificar a compatibilidade e revisar o plano do Terraform.
+
 Confira os recursos que serão criados, modificados ou removidos. Não prossiga caso o plano apresente alterações inesperadas.
 
 ## 5. Aplicar a infraestrutura
@@ -99,5 +105,9 @@ Ao finalizar, o Terraform apresentará os outputs da infraestrutura, incluindo o
 - Restringir o acesso SSH ao endereço IP público autorizado, utilizando `/32`.
 - Não expor a porta administrativa SSH para `0.0.0.0/0`.
 - Manter o estado e as variáveis reais fora do diretório do projeto.
+- Manter uma cópia de segurança do arquivo `terraform.tfstate` em local protegido.
+- Evitar executar operações simultâneas de Terraform utilizando o mesmo estado local.
 
 O `.gitignore` do repositório contém regras adicionais para evitar o versionamento acidental desses arquivos.
+
+O arquivo `terraform.tfstate` é necessário para manter o vínculo entre a configuração e os recursos existentes na AWS. Preserve cópias de segurança protegidas e atualizadas. Se o estado for perdido ou ficar inconsistente, recupere-o antes de executar novas operações de provisionamento.

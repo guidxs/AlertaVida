@@ -20,5 +20,5 @@ output "security_group_id" {
 
 output "ami_id" {
   description = "Amazon Linux 2023 x86_64 AMI selected in the configured region."
-  value       = data.aws_ami.amazon_linux_2023.id
+  value       = aws_instance.alertavida.ami
 }

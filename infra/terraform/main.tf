@@ -1,33 +1,3 @@
-data "aws_ami" "amazon_linux_2023" {
-  most_recent = true
-  owners      = ["137112412989"] # Amazon
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-kernel-*-x86_64"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "state"
-    values = ["available"]
-  }
-}
-
 resource "aws_security_group" "alertavida" {
   name        = "alertavida-ec2"
   description = "Public web access and SSH restricted to the operator IP."
@@ -73,7 +43,7 @@ resource "aws_vpc_security_group_egress_rule" "all_ipv4" {
 }
 
 resource "aws_instance" "alertavida" {
-  ami                         = data.aws_ami.amazon_linux_2023.id
+  ami                         = "ami-0b71756f4d851f798"
   instance_type               = "t3.small"
   subnet_id                   = var.subnet_id
   key_name                    = var.key_name

@@ -8,9 +8,27 @@ Esta entrega apresenta a infraestrutura de implantação na AWS, o pipeline DevS
 
 O sistema é um protótipo acadêmico: os resultados e alertas são sugestões para validação humana. Não existe integração operacional com a API do Smart Sampa, acesso a câmeras reais ou acionamento automático de serviços de emergência.
 
-**Aplicação:** http://52.90.165.81
+**Aplicação:** http://54.158.4.222
 
-> O endereço utiliza o IP público atual da instância. Caso a instância seja recriada ou receba outro IP, atualize este endereço.
+> O endereço utiliza o IP público atual da instância.
+
+### Ciclo de vida do ambiente AWS Academy
+
+A infraestrutura deste projeto utiliza o AWS Academy Learner Lab, um ambiente acadêmico com sessões temporárias. Quando uma sessão expira, a aplicação pode ficar indisponível até que o laboratório seja iniciado novamente.
+
+Para recuperar o ambiente:
+
+1. Acesse o AWS Academy e clique em `Start Lab`.
+2. Aguarde a inicialização do laboratório.
+3. Atualize as credenciais temporárias da AWS CLI, utilizando os novos valores disponibilizados em `AWS Details`.
+4. Consulte o novo IP público da instância EC2.
+5. Verifique a disponibilidade da aplicação.
+6. Atualize o endereço público na documentação, caso tenha mudado.
+7. Restabeleça o túnel SSH para recuperar o acesso ao Prometheus pelo Grafana local.
+
+A instância e seus dados persistem entre as sessões do laboratório, conforme as condições do AWS Academy. A expiração da sessão não exige repetir o provisionamento com Terraform.
+
+**Limitação:** a disponibilidade contínua da aplicação não é garantida. O ambiente depende da ativação do Learner Lab e dos limites definidos pela plataforma acadêmica.
 
 ## 2. Arquitetura
 
@@ -18,11 +36,13 @@ A aplicação é executada em uma instância EC2 com Docker Compose. O frontend 
 
 O backend disponibiliza a API e o endpoint de métricas. Prometheus coleta as métricas da aplicação e do host por meio do Node Exporter. O Grafana é executado localmente para visualização dos dados, acessando o Prometheus por um túnel SSH.
 
+
 ```mermaid
 flowchart TB
-    U[Usuário] -->|HTTP / HTTPS| SG[Security Group]
-    SG --> EC2[EC2 - Amazon Linux 2023]
-    subgraph EC2[EC2 - Docker Compose]
+    U[Usuário] -->|HTTP| SG[Security Group]
+    SG --> INSTANCE[EC2 - Amazon Linux 2023]
+
+    subgraph STACK[EC2 - Docker Compose]
         FE[Frontend]
         BE[Backend / FastAPI]
         PR[Prometheus]
@@ -31,6 +51,8 @@ flowchart TB
         PR -->|/metrics| BE
         PR -->|Métricas do host| NE
     end
+
+    INSTANCE --> STACK
     G[Grafana local] -->|Túnel SSH| PR
     BE --> EXT[Serviços externos / fontes de dados]
 ```
@@ -142,11 +164,13 @@ Também existe um painel adicional de disponibilidade do backend.
 
 ### Alertas configurados
 
-- **Backend indisponível:** quando o Prometheus identifica que o serviço deixou de responder.
-- **Taxa de erros elevada:** quando a proporção de respostas HTTP 5xx ultrapassa o limite configurado.
-- **Latência elevada:** quando o percentil 95 ultrapassa o limite configurado.
+As regras permanentes são definidas em `ops/observability/alerts.yml`:
 
-Os alertas possuem condições e períodos de avaliação definidos em `ops/observability/alerts.yml`.
+- **Backend indisponível:** dispara quando o Prometheus não consegue coletar métricas do backend por 1 minuto.
+- **Taxa de erros elevada:** dispara quando mais de 5% das requisições retornam HTTP 5xx, durante 2 minutos, considerando uma janela de 5 minutos.
+- **Latência elevada:** dispara quando a latência p95 ultrapassa 1 segundo durante 2 minutos, considerando uma janela de 5 minutos.
+
+As regras possuem severidades `critical` e `warning`, conforme a configuração. Uma regra temporária também foi utilizada para validar o disparo de alertas no Grafana, mas foi removida após o teste.
 
 ### Acesso ao Grafana
 
@@ -196,20 +220,27 @@ Para a entrega, devem ser identificadas as fontes de dados utilizadas, a existê
 
 ## 9. Estimativa de custos
 
-A infraestrutura utiliza uma instância EC2 `t3.small` e um volume EBS gp3 de 8 GB.
+A infraestrutura utiliza uma instância EC2 `t3.small` na região `us-east-1`, com volume EBS `gp3` de 8 GB e um endereço IPv4 público.
 
-Os principais itens a considerar na estimativa são:
+Considerando funcionamento contínuo durante aproximadamente 730 horas por mês, os custos estimados são:
 
-| Recurso | Critério de cobrança |
-|---|---|
-| EC2 `t3.small` | Tempo de execução da instância |
-| EBS gp3 | Capacidade provisionada do volume |
-| IPv4 público | Cobrança aplicável ao endereço público |
-| Transferência de dados | Volume de dados transferidos para fora da AWS |
+| Recurso | Custo mensal estimado |
+|---|---:|
+| Amazon EC2 t3.small | US$ 15,18 |
+| Amazon EBS gp3 (8 GB) | US$ 0,64 |
+| Endereço IPv4 público | US$ 3,65 |
+| **Total estimado** | **US$ 19,47** |
 
-A estimativa deve considerar a região AWS utilizada, o período de execução e as condições do ambiente acadêmico AWS Academy / Learner Lab.
+O valor corresponde a aproximadamente R$ 110,35, considerando uma cotação indicativa de US$ 1 = R$ 5,6663 em 13/11/2026.
 
-Os valores finais devem ser preenchidos com base na AWS Pricing Calculator ou nos valores efetivamente apresentados pelo ambiente utilizado. A utilização de créditos acadêmicos não representa necessariamente o custo comercial equivalente.
+A estimativa considera preços On-Demand e não inclui transferência adicional de dados, snapshots, eventuais créditos extras de CPU, impostos ou variações cambiais. Os valores podem mudar conforme a região, o consumo e a tabela de preços da AWS.
+
+Como o ambiente utiliza AWS Academy Learner Lab, os custos efetivamente cobrados podem ser diferentes devido aos créditos e limites disponibilizados no laboratório.
+
+Referências de preços:
+- [Amazon EC2](https://aws.amazon.com/ec2/pricing/on-demand/)
+- [Amazon EBS](https://aws.amazon.com/ebs/pricing/)
+- [Amazon VPC - IPv4 público](https://aws.amazon.com/vpc/pricing/)
 
 ## 10. Como reproduzir o ambiente
 

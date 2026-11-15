@@ -33,6 +33,8 @@ O Prometheus fica vinculado ao endereço de loopback da EC2, sem exposição nas
 ssh -L 9090:127.0.0.1:9090 ec2-user@<EC2_PUBLIC_IP_OR_DNS>
 ```
 
+No AWS Academy Learner Lab, o IP público da instância pode mudar após a reinicialização de uma sessão. Nesse caso, consulte o novo endereço da EC2 e atualize o comando SSH antes de restabelecer o túnel. O terminal que mantém o túnel deve permanecer aberto enquanto o Grafana estiver sendo utilizado.
+
 Mantenha o terminal aberto e acesse:
 
 `http://localhost:9090`
@@ -60,6 +62,22 @@ O dashboard apresenta os seguintes indicadores:
 - Uso de CPU da instância EC2.
 
 O Grafana utiliza o endereço `http://host.docker.internal:9090` para acessar o Prometheus pelo túnel SSH. O acesso inicial utiliza as credenciais padrão da imagem; altere a senha no primeiro acesso.
+
+## Regras de alerta
+
+As regras de alerta são definidas em `ops/observability/alerts.yml` e carregadas pelo Prometheus.
+
+O projeto possui três regras permanentes:
+
+| Regra | Condição de disparo | Duração | Severidade |
+|---|---|---|---|
+| `AlertaVidaBackendDown` | O backend deixa de responder às coletas do Prometheus (`up == 0`). | 1 minuto | Critical |
+| `AlertaVidaHighErrorRate` | A taxa de respostas HTTP 5xx ultrapassa 5%, considerando uma janela de 5 minutos e desde que existam requisições. | 2 minutos | Warning |
+| `AlertaVidaHighLatency` | A latência p95 das requisições ultrapassa 1 segundo, considerando uma janela de 5 minutos. | 2 minutos | Warning |
+
+As regras são avaliadas pelo Prometheus e podem ser consultadas em sua interface, na seção **Alerts**.
+
+Uma regra temporária também foi utilizada durante a validação do mecanismo de alertas no Grafana. Ela foi removida após o teste e não faz parte da configuração permanente do projeto.
 
 ## Verificação e consulta de logs
 
