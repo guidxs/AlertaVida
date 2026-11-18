@@ -148,7 +148,7 @@ A contribuição do projeto é tecnológica e informacional, não substituindo o
 ## Documentação por disciplina
 
 - [Desenvolvimento do MVP](./mvp/README.md)
-- [Big Data](./big-data/databricks/README_BIG_DATA.md)
+- [Big Data](./big-data/README.md)
 - [Visão Computacional](./computer-vision/README.md)
 - [Secure DevOps Tools & Cloud Computing](./DevOps-Cloud/ops/README.md)
 

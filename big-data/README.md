@@ -13,6 +13,9 @@ O pipeline utiliza Apache Airflow para orquestração e Databricks para processa
 - Guilherme Doretto Sobreiro — RM 99674
 - Guilherme Fazito Ziolli Sordili — RM 550539
 
+## Link do vídeo
+- Mostrando o MVP: https://www.youtube.com/watch?v=lyxsTVF79Ew
+
 ## Ficha do produto
 
 | Campo | Descrição |
