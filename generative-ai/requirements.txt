@@ -1,0 +1,12 @@
+torch
+transformers>=4.44
+peft>=0.12
+accelerate
+sentence-transformers
+pydantic>=2
+numpy
+pandas
+fastapi
+uvicorn
+jupyter
+matplotlib

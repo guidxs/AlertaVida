@@ -1,0 +1,14 @@
+{
+  "limiar": 0.8869020938873291,
+  "recall_validacao": {
+    "recall@1": 1.0,
+    "recall@3": 1.0
+  },
+  "n_validacao": 24,
+  "n_respondiveis": 12,
+  "n_sem_suporte": 12,
+  "sensibilidade_respondiveis": 1.0,
+  "especificidade_sem_suporte": 1.0,
+  "acuracia_balanceada_validacao": 1.0,
+  "criterio": "maior acuracia balanceada na validacao, incluindo recusas explicitas de fatos ausentes; desempate pelo maior limiar"
+}

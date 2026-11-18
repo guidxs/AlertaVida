@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pt
+*.safetensors
+!modelos/lora_alertavida/adapter_model.safetensors
+snapshot_pre_melhoria_*.zip
+backup_pre_revisao_*.zip
+modelos/lora_alertavida_experimental/
+modelos/lora_alertavida_retreinado/

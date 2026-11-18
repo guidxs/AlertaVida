@@ -1,6 +1,26 @@
 # AlertaVida — Visão computacional
 
-Esta pasta reúne o treinamento do detector de acidentes, ferramentas de validação e scripts históricos de processamento de vídeos. O dashboard não executa estes scripts: a Galeria de Detecções apresenta vídeos previamente processados.
+Esta pasta reúne o treinamento do detector de acidentes, ferramentas de validação e scripts históricos de processamento de vídeos. 
+
+## Integrantes
+
+- Guilherme Doretto Sobreiro — RM 99674
+- Guilherme Fazito Ziolli Sordili — RM 550539
+
+## Ficha do produto
+
+| Campo | Descrição |
+|---|---|
+| **Nome do produto** | AlertaVida |
+| **Cidadão e território** | Pessoas envolvidas em acidentes de trânsito em áreas urbanas, com aplicação prevista para centrais de monitoramento municipais. |
+| **Problema, em uma frase** | Possíveis acidentes podem demorar para ser identificados, avaliados e encaminhados às equipes responsáveis. |
+| **Proposta de valor** | Transformar sinais capturados por câmeras em alertas contextualizados, com triagem assistida por IA, referências de apoio e dados territoriais para orientar a validação humana. |
+| **Arquitetura: componentes** | Câmeras e vídeos de ocorrências → modelo de visão computacional → API FastAPI do MVP → painel React/Vite → módulo GenAI com recuperação de fontes (RAG), geração e validação de JSON → Databricks SQL Warehouse, mapa, indicadores e central de triagem. |
+| **Fontes de dados** | Vídeos de acidentes usados no desenvolvimento, eventos e indicadores armazenados no Databricks SQL Warehouse e base documental institucional em `base/trechos.jsonl`/`base/fontes.csv`, incluindo SAMU, legislação de trânsito, PRF e orientações de emergência. |
+| **Modelos de IA utilizados** | YOLO11n personalizado para detecção de acidentes; Qwen/Qwen2.5-1.5B-Instruct para geração local; `intfloat/multilingual-e5-small` para busca semântica; adaptador LoRA opcional para a configuração RAG + LoRA. |
+| **URL do MVP e repositório** | MVP local: http://localhost:5173/ · GenAI local: http://localhost:8001/ · Repositório: https://github.com/guidxs/AlertaVida |
+| **Indicadores de impacto** | Quantidade de ocorrências identificadas, precisão e recall das detecções, tempo entre identificação e encaminhamento, tempo de triagem, taxa de JSON válido, citação correta das fontes e taxa de recusa quando faltam evidências. |
+| **ODS conectados** | **ODS 3 — Saúde e Bem-Estar:** apoia a identificação e o encaminhamento mais rápidos de possíveis acidentes.<br>**ODS 9 — Indústria, Inovação e Infraestrutura:** aplica IA, dados e infraestrutura digital a um desafio de segurança viária.<br>**ODS 10 — Redução das Desigualdades:** busca apoiar o acesso mais equitativo à ajuda, sem depender da capacidade financeira da pessoa. |
 
 ## Estrutura
 
@@ -16,17 +36,9 @@ Esta pasta reúne o treinamento do detector de acidentes, ferramentas de valida�
 
 Os resultados históricos estão organizados em `computer-vision/runs/`. A execução principal está em `runs/detect/runs/alertavida_yolo11n/`, e as avaliações estão em `runs/detect/results/`.
 
-## Origem e preparação do dataset
+## Origem do dataset
 
-O projeto utiliza o dataset **Accident Detection**, publicado no Mendeley Data com o título **AccidentDetection-9k: An Annotated Road Accident Image Dataset for Object Detection**. O registro oficial consultado é a versão 2, publicada em 1º de setembro de 2026, DOI `10.17632/4x5my8gbcs.2`. Os colaboradores indicados são Farzana Akter Mily, Md Ibrahim Shikder Mahin e Md Shamsul Arefin. A licença indicada pelo registro é **CC BY 4.0**.
-
-[Abrir a publicação oficial no Mendeley Data — versão 2](https://data.mendeley.com/datasets/4x5my8gbcs/2)
-
-**Referência bibliográfica:** Mily, Farzana Akter; Mahin, Md Ibrahim Shikder; Arefin, Md Shamsul. (2026). *AccidentDetection-9k: An Annotated Road Accident Image Dataset for Object Detection* (versão 2). Mendeley Data. [https://doi.org/10.17632/4x5my8gbcs.2](https://doi.org/10.17632/4x5my8gbcs.2). Licença: CC BY 4.0.
-
-Ao reutilizar ou redistribuir o dataset, respeite os termos da licença e atribua o crédito aos colaboradores/autores indicados no registro.
-
-**Rastreabilidade da cópia local:** o ZIP atualmente usado pelo projeto contém a estrutura do dataset e um `data.yaml`, mas não identifica o DOI nem a versão do registro. Portanto, não é possível confirmar apenas pelo ZIP que a cópia local corresponde exatamente à versão 2. Para reproduzir a origem documentada, baixe explicitamente a versão 2 pelo registro acima.
+O projeto utiliza o dataset **Accident** (https://www.kaggle.com/datasets/picekl/accident/data)
 
 ### Baixar e extrair
 
@@ -168,16 +180,12 @@ As métricas abaixo são os valores finais da partição de validação, registr
 
 ![Curvas do treinamento](runs/detect/runs/alertavida_yolo11n/results.png)
 
-O gráfico acompanha as perdas e as métricas ao longo das épocas. Em geral, perdas menores e métricas de validação maiores ou estáveis indicam aprendizado; oscilações entre épocas são esperadas e devem ser interpretadas junto com os resultados finais.
+O gráfico acompanha as perdas e as métricas ao longo das épocas.
 
 ![Curva Precision-Recall](runs/detect/results/test_evaluation/BoxPR_curve.png)
 
 A curva mostra como precisão e recall variam conforme o limiar de confiança muda. Ela ajuda a visualizar o compromisso entre encontrar mais acidentes e reduzir falsos positivos.
 
-![Matriz de confusão normalizada](runs/detect/results/test_evaluation/confusion_matrix_normalized.png)
+As duas últimas imagens estão armazenadas em `runs/detect/results/test_evaluation/`. 
 
-A matriz resume, em proporções, como as detecções se comparam às classes reais: a diagonal representa correspondências e as outras células representam erros de classificação ou detecção.
-
-As duas últimas imagens estão armazenadas em `runs/detect/results/test_evaluation/`. A origem exata dessa avaliação não está documentada o suficiente para afirmá-la como teste independente; por isso, elas não são usadas para rotular as métricas da tabela acima.
-
-O modelo é um detector customizado para a classe `Accident`; seus resultados podem incluir falsos positivos ou deixar de detectar colisões. A galeria é uma demonstração com vídeos gravados e resultados previamente processados. Ela não representa monitoramento ao vivo nem confirmação automática de acidentes.
+O modelo é um detector customizado para a classe `Accident`; seus resultados podem incluir falsos positivos ou deixar de detectar colisões. A galeria é uma demonstração com vídeos gravados.

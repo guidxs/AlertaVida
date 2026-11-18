@@ -107,7 +107,7 @@ O processo é dividido em duas etapas:
 1. O GitHub Actions executa as verificações e builds a cada push, pull request ou execução manual.
 2. Na EC2, um timer do systemd verifica periodicamente o último push aprovado na branch `main`.
 
-O script `ops/deploy/deploy-alertavida.sh` valida o commit aprovado antes de iniciar a implantação. Também utiliza bloqueio de execução concorrente, preserva as imagens anteriores e verifica a saúde dos serviços após a atualização.
+O script `DevOps-Cloud/ops/deploy/deploy-alertavida.sh` valida o commit aprovado antes de iniciar a implantação. Também utiliza bloqueio de execução concorrente, preserva as imagens anteriores e verifica a saúde dos serviços após a atualização.
 
 Se a implantação falhar, o script tenta restaurar o commit e as imagens anteriores. O estado do deploy só é atualizado depois que as verificações de saúde são aprovadas.
 
@@ -164,7 +164,7 @@ Também existe um painel adicional de disponibilidade do backend.
 
 ### Alertas configurados
 
-As regras permanentes são definidas em `ops/observability/alerts.yml`:
+As regras permanentes são definidas em `DevOps-Cloud/ops/observability/alerts.yml`:
 
 - **Backend indisponível:** dispara quando o Prometheus não consegue coletar métricas do backend por 1 minuto.
 - **Taxa de erros elevada:** dispara quando mais de 5% das requisições retornam HTTP 5xx, durante 2 minutos, considerando uma janela de 5 minutos.
@@ -255,7 +255,7 @@ Referências de preços:
 
 ### Provisionamento
 
-1. Acesse `infra/terraform/`.
+1. Acesse `DevOps-Cloud/infra/terraform/`.
 2. Prepare o arquivo `terraform.tfvars` fora do repositório.
 3. Configure VPC, subnet, chave SSH e endereço IPv4 autorizado.
 4. Inicialize o Terraform utilizando o caminho externo para o estado.

@@ -33,6 +33,16 @@ Instrumentator(
 ).instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
 
 
+@app.get("/")
+def root() -> dict:
+    return {
+        "status": "online",
+        "service": "AlertaVida MVP API",
+        "health": "/api/health",
+        "documentation": "/docs",
+    }
+
+
 def load_alertas() -> list[dict]:
     try:
         return fetch_alertas()

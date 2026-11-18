@@ -38,6 +38,8 @@ Thumbs.db
 /airflow/config/airflow.cfg
 /airflow/logs/
 /airflow/chegada/*.csv
+/big-data/airflow/config/
+/big-data/airflow/logs/
 
 # Vision datasets and historical video work products stay local.
 /computer-vision/dataset/

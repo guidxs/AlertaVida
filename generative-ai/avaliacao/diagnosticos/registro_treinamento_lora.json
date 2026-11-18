@@ -1,0 +1,35 @@
+{
+  "modelo_base": "Qwen/Qwen2.5-1.5B-Instruct",
+  "arquivo_treino": "avaliacao/casos_treino_ampliado.jsonl",
+  "exemplos": 81,
+  "respondiveis": 56,
+  "recusas": 25,
+  "max_length": 1024,
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "modulos_alvo": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "epocas": 3,
+  "learning_rate": 0.0002,
+  "batch_por_dispositivo": 1,
+  "gradient_accumulation_steps": 8,
+  "passos_de_atualizacao": 33,
+  "duracao_segundos": 1409,
+  "ultimo_loss_registrado": 0.1738,
+  "epoca_do_ultimo_log": 2.79,
+  "loss_observacao": "Último registro de log observado perto do fim do treino; não é apresentado como train_loss final.",
+  "semente_fixa": false,
+  "avaliacao": {
+    "arquivo_base": "avaliacao/diagnosticos/placar_validacao_base.csv",
+    "acerto": 0.958,
+    "arquivo_experimental": "avaliacao/diagnosticos/placar_validacao_experimental.csv",
+    "acerto_experimental": 0.875,
+    "n_casos_validacao": 24,
+    "decisao": "Manter o adaptador original como padrão."
+  }
+}

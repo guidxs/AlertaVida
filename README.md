@@ -8,6 +8,11 @@ A proposta é desenvolver uma solução que possa ser integrada à infraestrutur
 
 > Projeto desenvolvido para a Global Solution 2026.2 da FIAP.
 
+## 2. Integrantes
+
+- Guilherme Doretto Sobreiro — RM 99674
+- Guilherme Fazito Ziolli Sordili — RM 550539
+
 ## O problema
 
 Acidentes de trânsito podem passar despercebidos ou demorar a ser identificados e encaminhados às equipes responsáveis. Esse intervalo pode comprometer a agilidade na avaliação da ocorrência e no atendimento às vítimas.
@@ -29,21 +34,20 @@ O funcionamento planejado segue este fluxo:
 
 A inteligência artificial atua como ferramenta de identificação e apoio. A confirmação da ocorrência e a decisão sobre o atendimento permanecem sob responsabilidade humana.
 
-## Ficha técnica do MVP
+## Ficha do produto
 
 | Campo | Descrição |
 |---|---|
 | **Nome do produto** | AlertaVida |
-| **Cidadão e território** | Vítimas de acidentes de trânsito em áreas urbanas, com possibilidade de aplicação em municípios de diferentes portes. |
-| **Problema** | A demora na identificação e no encaminhamento de acidentes pode prejudicar a agilidade no atendimento às vítimas. |
-| **Proposta de valor** | Utilizar visão computacional para identificar possíveis acidentes em câmeras urbanas, gerar alertas e encaminhá-los às equipes responsáveis pela verificação. |
-| **Arquitetura** | Aplicação web, API, pipeline de dados, modelo de visão computacional, infraestrutura em nuvem e monitoramento. |
-| **Fontes de dados** | Dados de ocorrências de trânsito da ARTESP e conjunto de vídeos AccidentDetection-9k, utilizado no desenvolvimento do modelo. |
-| **Modelos de IA utilizados** | YOLO11n personalizado para detecção de acidentes em vídeos. |
-| **URL do MVP** |  |
-| **Repositório** | https://github.com/guidxs/AlertaVida |
-| **Indicadores de impacto** | Quantidade de ocorrências identificadas, taxa de detecções corretas, tempo de geração e encaminhamento de alertas e tempo de verificação. |
-| **ODS conectados** | ODS 3, ODS 11 e ODS 9. |
+| **Cidadão e território** | Pessoas envolvidas em acidentes de trânsito em áreas urbanas, com aplicação prevista para centrais de monitoramento municipais. |
+| **Problema, em uma frase** | Possíveis acidentes podem demorar para ser identificados, avaliados e encaminhados às equipes responsáveis. |
+| **Proposta de valor** | Transformar sinais capturados por câmeras em alertas contextualizados, com triagem assistida por IA, referências de apoio e dados territoriais para orientar a validação humana. |
+| **Arquitetura: componentes** | Câmeras e vídeos de ocorrências → modelo de visão computacional → API FastAPI do MVP → painel React/Vite → módulo GenAI com recuperação de fontes (RAG), geração e validação de JSON → Databricks SQL Warehouse, mapa, indicadores e central de triagem. |
+| **Fontes de dados** | Vídeos de acidentes usados no desenvolvimento, eventos e indicadores armazenados no Databricks SQL Warehouse e base documental institucional em `base/trechos.jsonl`/`base/fontes.csv`, incluindo SAMU, legislação de trânsito, PRF e orientações de emergência. |
+| **Modelos de IA utilizados** | YOLO11n personalizado para detecção de acidentes; Qwen/Qwen2.5-1.5B-Instruct para geração local; `intfloat/multilingual-e5-small` para busca semântica; adaptador LoRA opcional para a configuração RAG + LoRA. |
+| **URL do MVP e repositório** | MVP local: http://localhost:5173/ · GenAI local: http://localhost:8001/ · Repositório: https://github.com/guidxs/AlertaVida |
+| **Indicadores de impacto** | Quantidade de ocorrências identificadas, precisão e recall das detecções, tempo entre identificação e encaminhamento, tempo de triagem, taxa de JSON válido, citação correta das fontes e taxa de recusa quando faltam evidências. |
+| **ODS conectados** | **ODS 3 — Saúde e Bem-Estar:** apoia a identificação e o encaminhamento mais rápidos de possíveis acidentes.<br>**ODS 9 — Indústria, Inovação e Infraestrutura:** aplica IA, dados e infraestrutura digital a um desafio de segurança viária.<br>**ODS 10 — Redução das Desigualdades:** busca apoiar o acesso mais equitativo à ajuda, sem depender da capacidade financeira da pessoa. |
 
 ## Arquitetura e tecnologias
 
@@ -144,14 +148,14 @@ A contribuição do projeto é tecnológica e informacional, não substituindo o
 ## Documentação por disciplina
 
 - [Desenvolvimento do MVP](./mvp/README.md)
-- [Big Data](./databricks/README.md)
+- [Big Data](./big-data/databricks/README_BIG_DATA.md)
 - [Visão Computacional](./computer-vision/README.md)
-- [Secure DevOps Tools & Cloud Computing](./ops/README.md)
+- [Secure DevOps Tools & Cloud Computing](./DevOps-Cloud/ops/README.md)
 
 Documentação complementar da infraestrutura e observabilidade:
 
-- [Terraform](./infra/terraform/README.md)
-- [Observabilidade com Prometheus e Grafana](./ops/observability/README.md)
+- [Terraform](./DevOps-Cloud/infra/terraform/README.md)
+- [Observabilidade com Prometheus e Grafana](./DevOps-Cloud/ops/observability/README.md)
 
 ---
 

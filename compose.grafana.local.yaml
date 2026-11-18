@@ -12,8 +12,8 @@
       GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
     volumes:
       - alertavida_grafana_local_data:/var/lib/grafana
-      - ./ops/observability/grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./ops/observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./DevOps-Cloud/ops/observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./DevOps-Cloud/ops/observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     mem_limit: 512m

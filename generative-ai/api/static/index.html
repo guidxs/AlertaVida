@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AlertaVida | Central de triagem</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f2f5f9; --surface: #fff; --surface-alt: #f7f9fc; --ink: #18283d;
+      --muted: #65758a; --line: #dce4ed; --blue: #1769aa; --blue-dark: #105486;
+      --blue-soft: #e8f2fb; --red: #a63e42; --red-soft: #f9e9e8;
+      font-family: "Segoe UI", Arial, sans-serif; font-synthesis: none;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --page: #101821; --surface: #182431; --surface-alt: #202e3c; --ink: #e9f0f7;
+      --muted: #9baabd; --line: #304152; --blue: #65b5f2; --blue-dark: #7fc5fb;
+      --blue-soft: #203b52; --red: #ff9a97; --red-soft: #492d32;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--page); color: var(--ink); transition: background .2s, color .2s; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1320px; margin: 0 auto; padding: 0 36px 38px; }
+    header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 8px; background: var(--blue); color: white; font-weight: 800; font-size: 19px; }
+    h1 { margin: 0; font-size: 1.05rem; font-weight: 720; letter-spacing: -.025em; }
+    .subtitle { margin: 3px 0 0; color: var(--muted); font-size: .75rem; }
+    .header-actions { display: flex; align-items: center; gap: 20px; }
+    .status { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .75rem; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #398c68; box-shadow: 0 0 0 3px #398c681b; }
+    .theme-toggle { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 5px; padding: 8px 11px; background: var(--surface); color: var(--ink); font-size: .73rem; }
+    .theme-toggle:hover { border-color: var(--blue); }
+    .intro { display: flex; align-items: end; justify-content: space-between; gap: 30px; padding: 34px 0 27px; }
+    .intro-copy { max-width: 680px; }
+    .kicker { margin: 0 0 9px; color: var(--blue); font-size: .68rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    .intro h2 { margin: 0; font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.12; letter-spacing: -.045em; font-weight: 650; }
+    .intro p { max-width: 620px; margin: 11px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+    .workspace-tag { flex: 0 0 auto; border-left: 2px solid var(--blue); padding: 5px 0 5px 13px; color: var(--muted); font-size: .69rem; line-height: 1.6; }
+    .workspace-tag strong { display: block; color: var(--ink); font-size: .75rem; font-weight: 650; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(340px, .84fr); gap: 20px; align-items: start; }
+    .card { overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 7px; box-shadow: 0 5px 18px #20374b0a; }
+    .card-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 21px 24px 17px; border-bottom: 1px solid var(--line); }
+    .card-head-copy { display: flex; align-items: flex-start; gap: 13px; }
+    .step-number { display: grid; flex: 0 0 auto; place-items: center; width: 29px; height: 29px; border-radius: 5px; background: var(--blue-soft); color: var(--blue); font-size: .76rem; font-weight: 750; }
+    .card-title { margin: 0; font-size: 1rem; font-weight: 700; }
+    .card-note { display: inline-block; margin-top: 4px; color: var(--muted); font-size: .74rem; }
+    .card-label { color: var(--muted); font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    form { display: grid; gap: 17px; padding: 20px 24px 24px; }
+    label { display: grid; gap: 7px; color: var(--ink); font-size: .73rem; font-weight: 650; }
+    input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 4px; outline: none; background: var(--surface); color: var(--ink); padding: 10px 11px; transition: border-color .16s, box-shadow .16s, background .16s; }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    input:focus, select:focus, textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 17%, transparent); }
+    textarea { min-height: 75px; resize: vertical; line-height: 1.5; }
+    .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .field-group { display: grid; gap: 7px; }
+    .field-group > label { display: contents; }
+    .field-help { color: var(--muted); font-size: .67rem; font-weight: 400; }
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 13px; padding-top: 2px; }
+    .primary { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 43px; border: 0; border-radius: 4px; padding: 0 18px; color: white; font-weight: 680; background: var(--blue); transition: background .18s, transform .18s; }
+    .primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .primary:disabled { cursor: wait; opacity: .68; transform: none; }
+    .primary::after { content: "→"; font-size: 1rem; }
+    .hint { color: var(--muted); font-size: .7rem; }
+    .result-card { min-height: 100%; }
+    .result-card .card-head { padding-bottom: 17px; }
+    .result-card-body { padding: 21px 24px 24px; }
+    .empty { display: grid; place-items: center; min-height: 350px; text-align: center; color: var(--muted); }
+    .empty > div { max-width: 270px; }
+    .empty-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 17px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface-alt); color: var(--blue); font-size: 22px; }
+    .empty strong { color: var(--ink); font-size: 1rem; font-weight: 680; }
+    .empty p { font-size: .78rem; line-height: 1.6; }
+    .result-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 19px; }
+    .eyebrow { color: var(--blue); font-size: .65rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    .result-title { margin: 7px 0 0; font-size: 1.35rem; line-height: 1.2; font-weight: 680; letter-spacing: -.03em; text-transform: capitalize; }
+    .badge { padding: 7px 9px; border-radius: 4px; font-size: .66rem; font-weight: 700; white-space: nowrap; }
+    .badge.ok { color: #246746; background: #e5f3eb; }
+    .badge.refused { color: #903b3c; background: var(--red-soft); }
+    :root[data-theme="dark"] .badge.ok { color: #b9e0ff; background: #244866; }
+    :root[data-theme="dark"] .badge.refused { color: #ffb3af; }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 17px; }
+    .metric { padding: 12px 13px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface-alt); }
+    .metric-label { color: var(--muted); font-size: .66rem; }
+    .metric-value { margin-top: 6px; font-size: .9rem; font-weight: 720; text-transform: capitalize; }
+    .section { border-top: 1px solid var(--line); padding-top: 15px; margin-top: 15px; }
+    .section h3 { margin: 0 0 9px; color: var(--muted); font-size: .65rem; text-transform: uppercase; letter-spacing: .1em; }
+    .next-step { margin: 0; color: var(--ink); line-height: 1.6; font-size: .83rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip { padding: 6px 8px; border-radius: 3px; background: var(--surface-alt); color: var(--muted); font-size: .69rem; }
+    .refs { display: grid; gap: 0; }
+    .ref { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .69rem; }
+    .ref strong { color: var(--blue); }
+    .json-toggle { margin-top: 17px; border: 1px solid var(--line); border-radius: 4px; padding: 9px 11px; background: var(--surface); color: var(--ink); font-size: .7rem; }
+    .json-toggle:hover { border-color: var(--blue); color: var(--blue); }
+    pre { margin: 10px 0 0; padding: 13px; max-height: 270px; overflow: auto; border-radius: 4px; background: #122033; color: #d9e8f7; font-size: .68rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .hidden { display: none; }
+    .error { margin: 16px 24px; color: var(--red); font-size: .78rem; }
+    footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; color: var(--muted); font-size: .68rem; }
+    footer strong { color: var(--ink); font-weight: 650; }
+    @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .empty { min-height: 260px; } }
+    @media (max-width: 560px) { .shell { padding: 0 15px 26px; } header { min-height: 67px; } .header-actions { gap: 10px; } .status { display: none; } .intro { display: block; padding: 27px 0 21px; } .workspace-tag { margin-top: 17px; } .fields { grid-template-columns: 1fr; } .card-head, form, .result-card-body { padding-left: 17px; padding-right: 17px; } .card-label { display: none; } footer { align-items: flex-start; flex-direction: column; line-height: 1.5; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div>
+          <h1>AlertaVida</h1>
+          <p class="subtitle">Central de triagem inteligente</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="status"><span class="status-dot"></span> Sistema local conectado</div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false"><span id="theme-icon" aria-hidden="true">◐</span><span id="theme-label">Modo noturno</span></button>
+      </div>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="kicker">Centro de operações · AlertaVida</p>
+        <h2 id="page-title">Cada alerta merece uma análise cuidadosa.</h2>
+        <p>Registre os sinais observados e consulte uma triagem fundamentada em fontes. A decisão final permanece com o operador.</p>
+      </div>
+      <div class="workspace-tag"><strong>AMBIENTE DE AVALIAÇÃO</strong>Eventos simulados · sem acionamento real</div>
+    </section>
+
+    <div class="layout">
+      <section class="card">
+        <div class="card-head">
+          <div class="card-head-copy"><span class="step-number">01</span><div>
+            <h2 class="card-title">Novo alerta</h2>
+            <span class="card-note">Dados do evento e observações do operador</span>
+          </div></div>
+          <span class="card-label">Entrada</span>
+        </div>
+        <form id="triage-form">
+          <label class="examples">Carregar cenário de exemplo
+            <select id="example">
+              <option value="trapped">Pessoa presa nas ferragens</option>
+              <option value="motorcycle">Queda de motociclista</option>
+              <option value="unknown">Alerta sem confirmação de vítima</option>
+              <option value="custom">Preencher manualmente</option>
+            </select>
+          </label>
+          <div class="fields">
+            <label>Câmera
+              <input name="camera_id" required>
+            </label>
+            <label>Data e hora
+              <input name="timestamp" type="datetime-local" required>
+            </label>
+            <label>Tipo do evento
+              <input name="event_type" required>
+            </label>
+            <label>Confiança (0 a 1)
+              <input name="confidence" type="number" min="0" max="1" step="0.01" required>
+            </label>
+          </div>
+          <label>Observação do operador
+            <textarea name="observacao" required></textarea>
+          </label>
+          <label>Pergunta para a triagem
+            <textarea name="pergunta" required>Classifique a ocorrência e indique o próximo passo do operador.</textarea>
+          </label>
+          <div class="actions">
+            <button id="submit" class="primary" type="submit">Analisar alerta</button>
+            <span class="hint">A IA sugere. O operador decide.</span>
+          </div>
+        </form>
+      </section>
+
+      <section class="card result-card" id="result-panel">
+        <div class="card-head">
+          <div class="card-head-copy"><span class="step-number">02</span><div>
+            <h2 class="card-title">Painel de triagem</h2>
+            <span class="card-note">Síntese, prioridade e fontes consultadas</span>
+          </div></div>
+          <span class="card-label">Análise</span>
+        </div>
+        <div class="result-card-body">
+        <div class="empty" id="empty">
+          <div>
+            <div class="empty-icon" aria-hidden="true">⌁</div>
+            <strong>Aguardando triagem</strong>
+            <p>Preencha os dados do alerta e inicie a análise. O resumo aparecerá aqui.</p>
+          </div>
+        </div>
+        <div id="result" class="hidden">
+          <div class="result-top">
+            <div>
+              <div class="eyebrow">Resultado da análise</div>
+              <h2 id="result-title" class="result-title"></h2>
+            </div>
+            <span id="badge" class="badge"></span>
+          </div>
+          <div class="metrics">
+            <div class="metric"><div class="metric-label">Prioridade</div><div id="priority" class="metric-value"></div></div>
+            <div class="metric"><div class="metric-label">Referências</div><div id="reference-count" class="metric-value"></div></div>
+          </div>
+          <div class="section">
+            <h3>Próximo passo</h3>
+            <p id="next-step" class="next-step"></p>
+          </div>
+          <div class="section">
+            <h3>Informações ausentes</h3>
+            <div id="missing" class="chips"></div>
+          </div>
+          <div class="section">
+            <h3>Trechos utilizados</h3>
+            <div id="refs" class="refs"></div>
+          </div>
+          <button id="json-toggle" class="json-toggle" type="button">Mostrar JSON completo</button>
+          <pre id="json" class="hidden"></pre>
+        </div>
+        </div>
+        <p id="error" class="error hidden" role="alert"></p>
+      </section>
+    </div>
+    <footer><span><strong>AlertaVida</strong> · Assistência à triagem</span><span>Sugestão automática · Validação humana obrigatória antes de qualquer encaminhamento.</span></footer>
+  </main>
+
+  <script>
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeLabel = document.getElementById("theme-label");
+    const themeIcon = document.getElementById("theme-icon");
+    const savedTheme = localStorage.getItem("alertavida-theme");
+
+    function setTheme(theme) {
+      const dark = theme === "dark";
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
+      themeToggle.setAttribute("aria-pressed", String(dark));
+      themeLabel.textContent = dark ? "Modo claro" : "Modo noturno";
+      themeIcon.textContent = dark ? "☼" : "◐";
+    }
+
+    setTheme(savedTheme === "dark" ? "dark" : "light");
+    themeToggle.addEventListener("click", () => {
+      const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      setTheme(nextTheme);
+      localStorage.setItem("alertavida-theme", nextTheme);
+    });
+
+    const form = document.getElementById("triage-form");
+    const example = document.getElementById("example");
+    const button = document.getElementById("submit");
+    const empty = document.getElementById("empty");
+    const result = document.getElementById("result");
+    const error = document.getElementById("error");
+    const jsonToggle = document.getElementById("json-toggle");
+    const json = document.getElementById("json");
+    const values = {
+      trapped: { event_type: "possivel_colisao", confidence: "0.87", observacao: "operador relata pessoa presa nas ferragens" },
+      motorcycle: { event_type: "queda_motociclista", confidence: "0.91", observacao: "pessoa caída ao lado de uma motocicleta; vítima não identificada" },
+      unknown: { event_type: "possivel_colisao", confidence: "0.74", observacao: "alerta da câmera sem confirmação visual de vítimas" },
+      custom: { event_type: "", confidence: "0.50", observacao: "" }
+    };
+
+    function setExample(name) {
+      const value = values[name];
+      form.camera_id.value = "CAM-01";
+      form.timestamp.value = "2026-11-10T14:32";
+      form.event_type.value = value.event_type;
+      form.confidence.value = value.confidence;
+      form.observacao.value = value.observacao;
+    }
+    example.addEventListener("change", () => setExample(example.value));
+    setExample("trapped");
+
+    function text(value) {
+      return value || "Não informado";
+    }
+    function render(data) {
+      const triagem = data.triagem;
+      empty.classList.add("hidden");
+      result.classList.remove("hidden");
+      error.classList.add("hidden");
+      document.getElementById("result-title").textContent = triagem.recusa ? "Triagem recusada" : text(triagem.tipo_provavel).replaceAll("_", " ");
+      const badge = document.getElementById("badge");
+      badge.textContent = triagem.recusa ? "Revisão necessária" : "Sugestão gerada";
+      badge.className = "badge " + (triagem.recusa ? "refused" : "ok");
+      document.getElementById("priority").textContent = triagem.recusa ? "—" : text(triagem.prioridade_sugerida);
+      document.getElementById("reference-count").textContent = `${data.trechos_recuperados.length} trecho(s)`;
+      document.getElementById("next-step").textContent = text(triagem.recusa ? triagem.motivo_recusa : triagem.proximo_passo);
+      const missing = document.getElementById("missing");
+      missing.innerHTML = "";
+      (triagem.informacoes_ausentes || []).forEach(item => {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = item.replaceAll("_", " ");
+        missing.appendChild(chip);
+      });
+      if (!missing.children.length) missing.innerHTML = '<span class="chip">Nenhuma informada</span>';
+      const refs = document.getElementById("refs");
+      refs.innerHTML = "";
+      data.trechos_recuperados.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "ref";
+          const label = document.createElement("span");
+          const id = document.createElement("strong");
+          id.textContent = item.id;
+          label.append(id, document.createTextNode(` · ${item.fonte}`));
+          if (item.url) {
+            const link = document.createElement("a");
+            link.href = item.url;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = "Abrir fonte";
+            label.append(document.createTextNode(" · "), link);
+          }
+          const relevance = document.createElement("span");
+          relevance.textContent = `relevância ${item.relevancia}`;
+          row.append(label, relevance);
+        refs.appendChild(row);
+      });
+      json.textContent = JSON.stringify(data, null, 2);
+      json.classList.add("hidden");
+      jsonToggle.textContent = "Mostrar JSON completo";
+    }
+    jsonToggle.addEventListener("click", () => {
+      const hidden = json.classList.toggle("hidden");
+      jsonToggle.textContent = hidden ? "Mostrar JSON completo" : "Ocultar JSON completo";
+    });
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      button.textContent = "Analisando...";
+      error.classList.add("hidden");
+      const data = new FormData(form);
+      const payload = {
+        evento: {
+          camera_id: data.get("camera_id"),
+          timestamp: data.get("timestamp"),
+          event_type: data.get("event_type"),
+          confidence: Number(data.get("confidence")),
+          observacao: data.get("observacao")
+        },
+        pergunta: data.get("pergunta")
+      };
+      try {
+        const response = await fetch("/triage", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.detail ? JSON.stringify(body.detail) : "Falha na API");
+        render(body);
+      } catch (cause) {
+        error.textContent = `Não foi possível concluir a triagem: ${cause.message}`;
+        error.classList.remove("hidden");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Analisar alerta";
+      }
+    });
+  </script>
+</body>
+</html>

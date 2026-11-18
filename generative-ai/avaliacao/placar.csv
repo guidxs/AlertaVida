@@ -1,0 +1,4 @@
+config,acerto,alucinacao,json_valido,citacao_correta,recusa_correta,segundos,n_casos
+rag,0.406,0.062,0.906,0.5,0.656,3.632,32
+rag_lora,0.562,0.031,1.0,0.594,0.75,6.318,32
+sem_contexto,0.125,0.344,0.969,0.344,0.625,6.5,32

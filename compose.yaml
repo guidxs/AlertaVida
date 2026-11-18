@@ -75,13 +75,13 @@ services:
       - "127.0.0.1:9090:9090"
     volumes:
       - type: bind
-        source: ./ops/observability/prometheus.yml
+        source: ./DevOps-Cloud/ops/observability/prometheus.yml
         target: /etc/prometheus/prometheus.yml
         read_only: true
         bind:
           create_host_path: false
       - type: bind
-        source: ./ops/observability/alerts.yml
+        source: ./DevOps-Cloud/ops/observability/alerts.yml
         target: /etc/prometheus/alerts.yml
         read_only: true
         bind:

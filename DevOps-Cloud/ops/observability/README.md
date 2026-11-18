@@ -65,7 +65,7 @@ O Grafana utiliza o endereço `http://host.docker.internal:9090` para acessar o 
 
 ## Regras de alerta
 
-As regras de alerta são definidas em `ops/observability/alerts.yml` e carregadas pelo Prometheus.
+As regras de alerta são definidas em `DevOps-Cloud/ops/observability/alerts.yml` e carregadas pelo Prometheus.
 
 O projeto possui três regras permanentes:
 
