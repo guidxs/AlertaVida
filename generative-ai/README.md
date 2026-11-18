@@ -1,6 +1,6 @@
 # AlertaVida · Generative AI for Engineering
 
-## Vídeo mostrando o MVP(https://youtu.be/lyxsTVF79Ew)
+- Vídeo mostrando o MVP: https://youtu.be/lyxsTVF79Ew
 
 **Monitoramento inteligente de acidentes de trânsito com apoio de inteligência artificial.**
 
