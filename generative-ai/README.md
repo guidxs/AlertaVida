@@ -1,5 +1,11 @@
 # AlertaVida · Generative AI for Engineering
 
+**Monitoramento inteligente de acidentes de trânsito com apoio de inteligência artificial.**
+
+O AlertaVida é uma solução tecnológica que propõe utilizar visão computacional e análise de dados para identificar possíveis acidentes de trânsito em sistemas de câmeras urbanas, gerar alertas e encaminhá-los às equipes responsáveis pela verificação e eventual acionamento dos serviços de emergência.
+
+A proposta é desenvolver uma solução que possa ser integrada à infraestrutura de monitoramento de diferentes municípios, contribuindo para uma identificação mais rápida de ocorrências e um melhor encaminhamento de possíveis vítimas.
+
 LLM local (`Qwen2.5-1.5B-Instruct`) que recebe um evento de possível acidente
 (gerado pela visão computacional) e devolve uma **triagem em JSON** com fontes,
 ou uma **recusa** quando a base não sustenta a resposta. O projeto compara três
