@@ -128,7 +128,6 @@ git clone https://github.com/guidxs/AlertaVida.git
 cd AlertaVida
 python -m venv .venv
 .venv\Scripts\activate        # Windows (PowerShell)
-pip install -r rpa/requirements.txt
 ```
 
 Não versione arquivos `.env`, credenciais ou tokens.
