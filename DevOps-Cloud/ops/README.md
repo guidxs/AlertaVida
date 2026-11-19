@@ -31,8 +31,6 @@ http://107.21.51.139 for acessado. Caso queira ver a aplicação em funcionament
 contato pelo Teams para que o ambiente seja ligado. A demonstração também está gravada em vídeo:
 https://www.youtube.com/watch?v=lyxsTVF79Ew.
 
-> O endereço utiliza o IP público atual da instância.
-
 ### Ciclo de vida do ambiente AWS Academy
 
 A infraestrutura deste projeto utiliza o AWS Academy Learner Lab, um ambiente acadêmico com sessões temporárias. Quando uma sessão expira, a aplicação pode ficar indisponível até que o laboratório seja iniciado novamente.

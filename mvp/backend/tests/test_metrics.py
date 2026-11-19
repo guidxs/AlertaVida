@@ -58,3 +58,11 @@ def test_metrics_endpoint_reports_http_requests_without_counting_scrapes() -> No
     assert any(family.name == "http_request_duration_seconds" for family in metric_families)
     assert any(family.name == "http_requests_inprogress" for family in metric_families)
     assert "synthetic-test-value" not in metrics_response.text
+
+
+def test_rpa_summary_endpoint_exposes_latest_output() -> None:
+    with TestClient(app) as client:
+        response = client.get("/api/rpa/ultima-execucao")
+    assert response.status_code == 200
+    assert "execution_id" in response.json()
+    assert "total_processados" in response.json()

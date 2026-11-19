@@ -1,6 +1,8 @@
 from collections import Counter
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+import json
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -108,3 +110,14 @@ def refresh() -> dict:
     clear_alertas_cache()
     rows = load_alertas()
     return {"updated_at": datetime.now(timezone.utc).isoformat(), "total": len(rows)}
+
+
+@app.get("/api/rpa/ultima-execucao")
+def ultima_execucao_rpa() -> dict:
+    caminho = Path(__file__).resolve().parents[2] / "rpa" / "output" / "alertas_priorizados.json"
+    if not caminho.exists():
+        raise HTTPException(status_code=404, detail="Nenhuma execução do RPA foi encontrada.")
+    try:
+        return json.loads(caminho.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=503, detail="O resultado da última execução está inválido.") from exc
