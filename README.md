@@ -8,6 +8,14 @@ A proposta é desenvolver uma solução que possa ser integrada à infraestrutur
 
 > Projeto desenvolvido para a Global Solution 2026.2 da FIAP.
 
+## Adendo: disponibilidade do MVP
+O MVP foi implantado por meio do AWS Academy Learner Lab, em razão dos créditos disponíveis.
+Por esse motivo, o servidor permanece ligado por apenas 4 horas e depois é desligado
+automaticamente, de modo que a aplicação pode estar fora do ar quando o endereço
+http://107.21.51.139 for acessado. Caso queira ver a aplicação em funcionamento, basta entrar em
+contato pelo Teams para que o ambiente seja ligado. A demonstração também está gravada em vídeo:
+https://www.youtube.com/watch?v=lyxsTVF79Ew.
+
 ## 2. Integrantes
 
 - Guilherme Doretto Sobreiro — RM 99674
