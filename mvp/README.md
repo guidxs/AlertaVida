@@ -40,6 +40,8 @@ npm run dev
 
 Abra `http://localhost:5173`. O endereço padrão da API é `http://localhost:8000`; para alterá-lo, crie `frontend/.env.local` com `VITE_API_URL=http://localhost:8000` e reinicie o Vite.
 
+Em produção, deixe `VITE_API_URL` vazio. O build utiliza URLs relativas e o nginx encaminha `/api/*` para o container `backend:8000`, permitindo o acesso pelo endereço público sem depender do `localhost` do navegador.
+
 Gerar a versão de produção:
 
 ```powershell
