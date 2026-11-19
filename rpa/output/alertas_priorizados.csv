@@ -1,0 +1,4 @@
+﻿evento_id,tipo_ocorrencia,data_evento,confianca,status,prioridade
+EVT-DEMO-001,Colisao,2026-11-18T18:30:00,0.93,PENDENTE,ALTA
+EVT-DEMO-002,Atropelamento,2026-11-18T18:35:00,0.76,PENDENTE,MEDIA
+EVT-DEMO-003,Veiculo parado,2026-11-18T18:40:00,0.64,CONFIRMADO,BAIXA

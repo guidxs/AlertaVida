@@ -1,0 +1,30 @@
+{"timestamp": "2026-11-19T01:37:29.218933+00:00", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T01:37:29.242031+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T01:37:29.243032+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:37:29.244034+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T01:37:29.244034+00:00", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:37:29.248401+00:00", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T01:38:52.995126+00:00", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T01:38:52.998596+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T01:38:52.998596+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:38:52.999596+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T01:38:53.000102+00:00", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:38:53.002134+00:00", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T01:40:03.482699+00:00", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T01:40:03.486226+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T01:40:03.487228+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:40:03.487228+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T01:40:03.488228+00:00", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:40:03.490225+00:00", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T01:40:05.124329+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:40:05.125330+00:00", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:40:05.126848+00:00", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T01:42:16.974984+00:00", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T01:42:16.979495+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T01:42:16.980495+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:42:16.981492+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T01:42:16.981492+00:00", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:42:16.985193+00:00", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T01:42:17.356029+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:42:17.357027+00:00", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:42:17.358029+00:00", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
