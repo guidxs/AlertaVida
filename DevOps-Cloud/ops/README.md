@@ -8,9 +8,14 @@ Esta entrega apresenta a infraestrutura de implantação na AWS, o pipeline DevS
 
 O sistema é um protótipo acadêmico: os resultados e alertas são sugestões para validação humana. Não existe integração operacional com a API do Smart Sampa, acesso a câmeras reais ou acionamento automático de serviços de emergência.
 
-**Aplicação:** http://54.158.4.222
+**Aplicação:** http://107.21.51.139
 
-> O endereço utiliza o IP público atual da instância.
+## Adendo: disponibilidade do MVP
+O MVP foi implantado por meio do AWS Academy Learner Lab, em razão dos créditos disponíveis.
+Por esse motivo, o servidor permanece ligado por apenas 4 horas e depois é desligado
+automaticamente, de modo que a aplicação pode estar fora do ar quando o endereço
+http://107.21.51.139 for acessado. Caso queira ver a aplicação em funcionamento, basta entrar em
+contato pelo Teams para que o ambiente seja ligado.
 
 ### Ciclo de vida do ambiente AWS Academy
 
