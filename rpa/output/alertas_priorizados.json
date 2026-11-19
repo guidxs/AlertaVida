@@ -1,4 +1,5 @@
 {
+  "execution_id": "d474a1203f4b",
   "total_entrada": 4,
   "total_processados": 3,
   "invalidos": 0,
@@ -8,31 +9,34 @@
     "MEDIA": 1,
     "BAIXA": 1
   },
-  "gerado_em": "2026-11-19T01:42:16.983186+00:00",
+  "gerado_em": "2026-11-19T01:53:02.273412+00:00",
   "alertas": [
     {
       "evento_id": "EVT-DEMO-001",
       "tipo_ocorrencia": "Colisao",
       "data_evento": "2026-11-18T18:30:00",
-      "confianca": "0.93",
+      "confianca": 0.93,
       "status": "PENDENTE",
-      "prioridade": "ALTA"
+      "prioridade": "ALTA",
+      "ordem_processamento": 1
     },
     {
       "evento_id": "EVT-DEMO-002",
       "tipo_ocorrencia": "Atropelamento",
       "data_evento": "2026-11-18T18:35:00",
-      "confianca": "0.76",
+      "confianca": 0.76,
       "status": "PENDENTE",
-      "prioridade": "MEDIA"
+      "prioridade": "MEDIA",
+      "ordem_processamento": 2
     },
     {
       "evento_id": "EVT-DEMO-003",
       "tipo_ocorrencia": "Veiculo parado",
       "data_evento": "2026-11-18T18:40:00",
-      "confianca": "0.64",
+      "confianca": 0.64,
       "status": "CONFIRMADO",
-      "prioridade": "BAIXA"
+      "prioridade": "BAIXA",
+      "ordem_processamento": 3
     }
   ]
 }

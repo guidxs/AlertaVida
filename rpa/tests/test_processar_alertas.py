@@ -25,6 +25,27 @@ class ProcessarAlertasTest(unittest.TestCase):
         self.assertEqual(resultado["invalidos"], 1)
         self.assertEqual(resultado["prioridades"]["MEDIA"], 1)
 
+    def test_rejeita_confianca_fora_do_intervalo(self) -> None:
+        resultado = processar([
+            {"evento_id": "EVT-002", "tipo_ocorrencia": "Acidente", "status": "PENDENTE", "confianca": 1.4},
+        ])
+        self.assertEqual(resultado["total_processados"], 0)
+        self.assertEqual(resultado["invalidos"], 1)
+
+    def test_rejeita_status_desconhecido(self) -> None:
+        resultado = processar([
+            {"evento_id": "EVT-003", "tipo_ocorrencia": "Acidente", "status": "EM_ANALISE", "confianca": 0.95},
+        ])
+        self.assertEqual(resultado["total_processados"], 0)
+        self.assertEqual(resultado["invalidos"], 1)
+
+    def test_confianca_invalida_nao_causa_excecao(self) -> None:
+        resultado = processar([
+            {"evento_id": "EVT-004", "tipo_ocorrencia": "Acidente", "status": "PENDENTE", "confianca": "inválida"},
+        ])
+        self.assertEqual(resultado["total_processados"], 0)
+        self.assertEqual(resultado["invalidos"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

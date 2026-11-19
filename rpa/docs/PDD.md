@@ -9,11 +9,18 @@ O processo começa pela definição da fonte: API do MVP ou CSV de demonstraçã
 - Lista de alertas da API `/api/alertas`.
 - Alternativamente, arquivo CSV com `evento_id`, `tipo_ocorrencia`, `data_evento`, `confianca` e `status`.
 
+## Identificação da execução
+
+Cada execução recebe um identificador curto e único. O identificador aparece no resumo JSON e em todos
+os eventos registrados em JSONL, permitindo relacionar logs e saídas.
+
 ## Processamento
 
 1. Ler a coleção de alertas.
 2. Para cada alerta:
    - validar campos obrigatórios;
+   - validar que a confiança é numérica e está entre 0 e 1;
+   - validar o status entre PENDENTE, CONFIRMADO e DESCARTADO;
    - verificar duplicidade pelo `evento_id`;
    - calcular prioridade pela decisão baseada em status e confiança;
    - registrar sucesso ou a falha apropriada.

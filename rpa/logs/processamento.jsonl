@@ -28,3 +28,15 @@
 {"timestamp": "2026-11-19T01:42:17.356029+00:00", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
 {"timestamp": "2026-11-19T01:42:17.357027+00:00", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
 {"timestamp": "2026-11-19T01:42:17.358029+00:00", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T01:53:01.317342+00:00", "execution_id": "088f49cf63f0", "evento": "INVALIDO", "mensagem": "Evento EVT-004 possui confiança não numérica."}
+{"timestamp": "2026-11-19T01:53:01.319340+00:00", "execution_id": "088f49cf63f0", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:53:01.319340+00:00", "execution_id": "088f49cf63f0", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:53:01.320340+00:00", "execution_id": "088f49cf63f0", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T01:53:01.320340+00:00", "execution_id": "088f49cf63f0", "evento": "INVALIDO", "mensagem": "Evento EVT-002 possui confiança fora do intervalo 0 a 1."}
+{"timestamp": "2026-11-19T01:53:01.321340+00:00", "execution_id": "088f49cf63f0", "evento": "INVALIDO", "mensagem": "Evento EVT-003 possui status inválido."}
+{"timestamp": "2026-11-19T01:53:02.266870+00:00", "execution_id": "d474a1203f4b", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T01:53:02.271414+00:00", "execution_id": "d474a1203f4b", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T01:53:02.272413+00:00", "execution_id": "d474a1203f4b", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T01:53:02.273412+00:00", "execution_id": "d474a1203f4b", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T01:53:02.273412+00:00", "execution_id": "d474a1203f4b", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T01:53:02.281451+00:00", "execution_id": "d474a1203f4b", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
