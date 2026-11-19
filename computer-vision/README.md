@@ -18,9 +18,17 @@ Esta pasta reúne o treinamento do detector de acidentes, ferramentas de valida�
 | **Arquitetura: componentes** | Câmeras e vídeos de ocorrências → modelo de visão computacional → API FastAPI do MVP → painel React/Vite → módulo GenAI com recuperação de fontes (RAG), geração e validação de JSON → Databricks SQL Warehouse, mapa, indicadores e central de triagem. |
 | **Fontes de dados** | Vídeos de acidentes usados no desenvolvimento, eventos e indicadores armazenados no Databricks SQL Warehouse e base documental institucional em `base/trechos.jsonl`/`base/fontes.csv`, incluindo SAMU, legislação de trânsito, PRF e orientações de emergência. |
 | **Modelos de IA utilizados** | YOLO11n personalizado para detecção de acidentes; Qwen/Qwen2.5-1.5B-Instruct para geração local; `intfloat/multilingual-e5-small` para busca semântica; adaptador LoRA opcional para a configuração RAG + LoRA. |
-| **URL do MVP e repositório** | MVP local: http://localhost:5173/ · GenAI local: http://localhost:8001/ · Repositório: https://github.com/guidxs/AlertaVida |
+| **URL do MVP e repositório** | MVP: http://107.21.51.139 (IP público fixo; servidor ligado por até 4 horas por sessão) · MVP local: http://localhost:5173/ · GenAI local: http://localhost:8001/ · Repositório: https://github.com/guidxs/AlertaVida |
 | **Indicadores de impacto** | Quantidade de ocorrências identificadas, precisão e recall das detecções, tempo entre identificação e encaminhamento, tempo de triagem, taxa de JSON válido, citação correta das fontes e taxa de recusa quando faltam evidências. |
 | **ODS conectados** | **ODS 3 — Saúde e Bem-Estar:** apoia a identificação e o encaminhamento mais rápidos de possíveis acidentes.<br>**ODS 9 — Indústria, Inovação e Infraestrutura:** aplica IA, dados e infraestrutura digital a um desafio de segurança viária.<br>**ODS 10 — Redução das Desigualdades:** busca apoiar o acesso mais equitativo à ajuda, sem depender da capacidade financeira da pessoa. |
+
+## Adendo: disponibilidade do MVP
+O MVP foi implantado por meio do AWS Academy Learner Lab, em razão dos créditos disponíveis.
+Por esse motivo, o servidor permanece ligado por apenas 4 horas e depois é desligado
+automaticamente, de modo que a aplicação pode estar fora do ar quando o endereço
+http://107.21.51.139 for acessado. Caso queira ver a aplicação em funcionamento, basta entrar em
+contato pelo Teams para que o ambiente seja ligado. A demonstração também está gravada em vídeo:
+https://www.youtube.com/watch?v=lyxsTVF79Ew.
 
 ## Estrutura
 
