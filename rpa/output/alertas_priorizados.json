@@ -1,5 +1,5 @@
 {
-  "execution_id": "d474a1203f4b",
+  "execution_id": "786ae2692436",
   "total_entrada": 4,
   "total_processados": 3,
   "invalidos": 0,
@@ -9,7 +9,7 @@
     "MEDIA": 1,
     "BAIXA": 1
   },
-  "gerado_em": "2026-11-19T01:53:02.273412+00:00",
+  "gerado_em": "2026-11-19T05:50:26.889419+00:00",
   "alertas": [
     {
       "evento_id": "EVT-DEMO-001",

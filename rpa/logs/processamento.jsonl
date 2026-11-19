@@ -40,3 +40,63 @@
 {"timestamp": "2026-11-19T01:53:02.273412+00:00", "execution_id": "d474a1203f4b", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
 {"timestamp": "2026-11-19T01:53:02.273412+00:00", "execution_id": "d474a1203f4b", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
 {"timestamp": "2026-11-19T01:53:02.281451+00:00", "execution_id": "d474a1203f4b", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T02:15:52.306407+00:00", "execution_id": "0f9fe623842b", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T02:15:52.312608+00:00", "execution_id": "0f9fe623842b", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T02:15:52.314337+00:00", "execution_id": "0f9fe623842b", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T02:15:52.314337+00:00", "execution_id": "0f9fe623842b", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T02:15:52.315342+00:00", "execution_id": "0f9fe623842b", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T02:15:52.320346+00:00", "execution_id": "0f9fe623842b", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T02:20:56.847743+00:00", "execution_id": "cd67c9ee2ea1", "evento": "INVALIDO", "mensagem": "Evento EVT-004 possui confiança não numérica."}
+{"timestamp": "2026-11-19T02:20:56.849743+00:00", "execution_id": "cd67c9ee2ea1", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T02:20:56.849743+00:00", "execution_id": "cd67c9ee2ea1", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T02:20:56.850744+00:00", "execution_id": "cd67c9ee2ea1", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T02:20:56.851755+00:00", "execution_id": "cd67c9ee2ea1", "evento": "INVALIDO", "mensagem": "Evento EVT-002 possui confiança fora do intervalo 0 a 1."}
+{"timestamp": "2026-11-19T02:20:56.851755+00:00", "execution_id": "cd67c9ee2ea1", "evento": "INVALIDO", "mensagem": "Evento EVT-003 possui status inválido."}
+{"timestamp": "2026-11-19T02:23:23.793076+00:00", "execution_id": "7b5827ae468b", "evento": "INVALIDO", "mensagem": "Evento EVT-004 possui confiança não numérica."}
+{"timestamp": "2026-11-19T02:23:23.794076+00:00", "execution_id": "7b5827ae468b", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T02:23:23.795116+00:00", "execution_id": "7b5827ae468b", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T02:23:23.795116+00:00", "execution_id": "7b5827ae468b", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T02:23:23.796116+00:00", "execution_id": "7b5827ae468b", "evento": "INVALIDO", "mensagem": "Evento EVT-002 possui confiança fora do intervalo 0 a 1."}
+{"timestamp": "2026-11-19T02:23:23.797117+00:00", "execution_id": "7b5827ae468b", "evento": "INVALIDO", "mensagem": "Evento EVT-003 possui status inválido."}
+{"timestamp": "2026-11-19T02:42:12.382921+00:00", "execution_id": "95695489b37a", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T02:42:12.389916+00:00", "execution_id": "95695489b37a", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T02:42:12.389916+00:00", "execution_id": "95695489b37a", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T02:42:12.390917+00:00", "execution_id": "95695489b37a", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T02:42:12.391917+00:00", "execution_id": "95695489b37a", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T02:42:12.396547+00:00", "execution_id": "95695489b37a", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T02:42:39.399047+00:00", "execution_id": "d6bb304c5c26", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T02:42:39.402071+00:00", "execution_id": "d6bb304c5c26", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T02:42:39.403076+00:00", "execution_id": "d6bb304c5c26", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T02:42:39.404075+00:00", "execution_id": "d6bb304c5c26", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T02:42:39.404075+00:00", "execution_id": "d6bb304c5c26", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T02:42:39.408857+00:00", "execution_id": "d6bb304c5c26", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T02:46:31.151708+00:00", "execution_id": "e47c78207411", "evento": "INVALIDO", "mensagem": "Evento EVT-004 possui confiança não numérica."}
+{"timestamp": "2026-11-19T02:46:31.153714+00:00", "execution_id": "e47c78207411", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T02:46:31.153714+00:00", "execution_id": "e47c78207411", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T02:46:31.153714+00:00", "execution_id": "e47c78207411", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T02:46:31.155221+00:00", "execution_id": "e47c78207411", "evento": "INVALIDO", "mensagem": "Evento EVT-002 possui confiança fora do intervalo 0 a 1."}
+{"timestamp": "2026-11-19T02:46:31.156231+00:00", "execution_id": "e47c78207411", "evento": "INVALIDO", "mensagem": "Evento EVT-003 possui status inválido."}
+{"timestamp": "2026-11-19T05:09:20.773091+00:00", "execution_id": "84aec5d21cb5", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T05:09:20.805220+00:00", "execution_id": "84aec5d21cb5", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T05:09:20.806221+00:00", "execution_id": "84aec5d21cb5", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T05:09:20.806221+00:00", "execution_id": "84aec5d21cb5", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T05:09:20.807363+00:00", "execution_id": "84aec5d21cb5", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T05:09:20.812876+00:00", "execution_id": "84aec5d21cb5", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T05:14:04.220374+00:00", "execution_id": "1b1ac134e601", "evento": "INVALIDO", "mensagem": "Evento EVT-004 possui confiança não numérica."}
+{"timestamp": "2026-11-19T05:14:04.221372+00:00", "execution_id": "1b1ac134e601", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T05:14:04.222374+00:00", "execution_id": "1b1ac134e601", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T05:14:04.222374+00:00", "execution_id": "1b1ac134e601", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T05:14:04.223371+00:00", "execution_id": "1b1ac134e601", "evento": "INVALIDO", "mensagem": "Evento EVT-002 possui confiança fora do intervalo 0 a 1."}
+{"timestamp": "2026-11-19T05:14:04.224373+00:00", "execution_id": "1b1ac134e601", "evento": "INVALIDO", "mensagem": "Evento EVT-003 possui status inválido."}
+{"timestamp": "2026-11-19T05:50:26.883862+00:00", "execution_id": "786ae2692436", "evento": "INICIO", "mensagem": "Iniciando processamento dos alertas."}
+{"timestamp": "2026-11-19T05:50:26.887368+00:00", "execution_id": "786ae2692436", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-001 processado com prioridade ALTA."}
+{"timestamp": "2026-11-19T05:50:26.888379+00:00", "execution_id": "786ae2692436", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-002 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T05:50:26.889419+00:00", "execution_id": "786ae2692436", "evento": "SUCESSO", "mensagem": "Evento EVT-DEMO-003 processado com prioridade BAIXA."}
+{"timestamp": "2026-11-19T05:50:26.889419+00:00", "execution_id": "786ae2692436", "evento": "DUPLICADO", "mensagem": "Evento EVT-DEMO-001 já havia sido processado."}
+{"timestamp": "2026-11-19T05:50:26.894504+00:00", "execution_id": "786ae2692436", "evento": "CONCLUIDO", "mensagem": "Processados=3 inválidos=0 duplicados=1."}
+{"timestamp": "2026-11-19T05:50:28.866061+00:00", "execution_id": "5c9b75b9c2cc", "evento": "INVALIDO", "mensagem": "Evento EVT-004 possui confiança não numérica."}
+{"timestamp": "2026-11-19T05:50:28.867569+00:00", "execution_id": "5c9b75b9c2cc", "evento": "SUCESSO", "mensagem": "Evento EVT-001 processado com prioridade MEDIA."}
+{"timestamp": "2026-11-19T05:50:28.867569+00:00", "execution_id": "5c9b75b9c2cc", "evento": "DUPLICADO", "mensagem": "Evento EVT-001 já havia sido processado."}
+{"timestamp": "2026-11-19T05:50:28.868577+00:00", "execution_id": "5c9b75b9c2cc", "evento": "INVALIDO", "mensagem": "Registro ignorado por não possuir evento_id ou tipo_ocorrencia."}
+{"timestamp": "2026-11-19T05:50:28.869578+00:00", "execution_id": "5c9b75b9c2cc", "evento": "INVALIDO", "mensagem": "Evento EVT-002 possui confiança fora do intervalo 0 a 1."}
+{"timestamp": "2026-11-19T05:50:28.870576+00:00", "execution_id": "5c9b75b9c2cc", "evento": "INVALIDO", "mensagem": "Evento EVT-003 possui status inválido."}
