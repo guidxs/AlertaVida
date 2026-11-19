@@ -20,8 +20,10 @@ readonly EXPECTED_WORKFLOW="Deploy Blindado"
 readonly PROJECT_NAME="alertavida"
 readonly BACKEND_IMAGE="alertavida-backend:latest"
 readonly FRONTEND_IMAGE="alertavida-frontend:latest"
+readonly GENAI_IMAGE="alertavida-genai:latest"
 readonly BACKEND_ROLLBACK_IMAGE="alertavida-backend:rollback"
 readonly FRONTEND_ROLLBACK_IMAGE="alertavida-frontend:rollback"
+readonly GENAI_ROLLBACK_IMAGE="alertavida-genai:rollback"
 
 ENV_LINK_CREATED=0
 TRANSACTION_ACTIVE=0
@@ -77,6 +79,33 @@ service_health_check() {
     done
 
     log ERROR "Backend did not become healthy within 180 seconds."
+    return 1
+}
+
+genai_health_check() {
+    local container_id
+    local health
+    local attempt
+
+    for ((attempt = 1; attempt <= 60; attempt++)); do
+        container_id="$(WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" ps -q genai 2>/dev/null || true)"
+        if [[ -n "$container_id" ]]; then
+            health="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}missing{{end}}' "$container_id" 2>/dev/null || true)"
+            case "$health" in
+                healthy)
+                    log INFO "GenAI healthcheck is healthy."
+                    return 0
+                    ;;
+                unhealthy)
+                    log ERROR "GenAI healthcheck reported unhealthy."
+                    return 1
+                    ;;
+            esac
+        fi
+        sleep 10
+    done
+
+    log ERROR "GenAI did not become healthy within 600 seconds."
     return 1
 }
 
@@ -140,7 +169,7 @@ http_check() {
 }
 
 verify_services() {
-    service_health_check && http_check / && http_check /api/live
+    service_health_check && genai_health_check && http_check / && http_check /api/live && http_check /genai/health
 }
 
 observability_health_check() {
@@ -482,6 +511,8 @@ check_build_space
 WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" build backend || die "Backend image build failed."
 check_build_space
 WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" build frontend || die "Frontend image build failed."
+check_build_space
+WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" build genai || die "GenAI image build failed."
 
 git -C "$APP_DIR" fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main || die "Could not recheck origin/main before activation."
 remote_main_sha="$(git -C "$APP_DIR" rev-parse 'refs/remotes/origin/main^{commit}')" || die "Could not resolve the refreshed origin/main."
@@ -491,7 +522,7 @@ git -C "$APP_DIR" fetch --no-tags origin +refs/heads/main:refs/remotes/origin/ma
 remote_main_sha="$(git -C "$APP_DIR" rev-parse 'refs/remotes/origin/main^{commit}')" || die "Could not resolve the final origin/main SHA."
 [[ "$remote_main_sha" == "$APPROVED_SHA" ]] || die "origin/main changed before activation; refusing to activate this SHA."
 
-WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" up -d --no-build backend frontend || die "MVP Compose update failed."
+WEB_PORT=80 docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" up -d --no-build backend frontend genai || die "MVP Compose update failed."
 verify_services || die "Post-deploy health checks failed."
 
 deployed_backend_image_id="$(active_container_image_id backend)" || die "Could not identify the healthy backend image for deployment state."

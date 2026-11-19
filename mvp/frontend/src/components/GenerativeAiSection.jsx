@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AlertTriangle, BrainCircuit, CheckCircle2 } from 'lucide-react'
 
-const apiUrl = import.meta.env.VITE_GENAI_URL || 'http://localhost:8001'
+const apiUrl = import.meta.env.VITE_GENAI_URL || '/genai'
 const examples = {
   trapped: { event_type: 'possivel_colisao', confidence: '0.87', observacao: 'operador relata pessoa presa nas ferragens' },
   motorcycle: { event_type: 'queda_motociclista', confidence: '0.91', observacao: 'pessoa caída ao lado de uma motocicleta; vítima não identificada' },
